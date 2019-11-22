@@ -16,18 +16,19 @@
 <p>Denis GERMAIN</p>
 <p>Ingénieur Cloud chez <img src="binaries/lectra.png" alt="height:30" style="height:30px;" /></p>
 <p>Auteur principal sur <a href="https://blog.zwindler.fr">blog.zwindler.fr</a></p>
-<p><strong>#geek #SF #courseAPied</strong></p>
+<p><strong>#geek</strong> <strong>#SF</strong> <strong>#courseAPied</strong></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="3" data-theme="gaia" style="--theme:gaia;">
 <h2>Lectra</h2>
-<p>On fait des grosses machines</p>
+<p>Leader mondial des solutions technologiques intégrées pour les entreprises utilisatrices de cuir ou textile</p>
+<p><img src="./binaries/Medium-Virga-MTO-cutting-job-0050.jpg" alt="width:550 center" style="width:550px;" /></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="4" data-theme="gaia" style="--theme:gaia;">
-<h2>Que fait un ingénieur cloud chez Lectra 1/2</h2>
-<p>There is no cloud, it's just someone else's computer</p>
+<h2>Que fait un ingénieur cloud chez Lectra ?</h2>
+<p><img src="./binaries/there_is_no_cloud.png" alt="width:600 center" style="width:600px;" /></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5" data-theme="gaia" style="--theme:gaia;">
-<h2>Que fait un ingénieur cloud chez Lectra 2/2</h2>
+<h2>Que fait un ingénieur cloud chez Lectra ?</h2>
 <p>Nuage de logos</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="6" data-class="lead" data-theme="gaia" class="lead" style="--class:lead;--theme:gaia;">
@@ -42,55 +43,77 @@ Crédits : <a href="https://habr.com/en/post/321810/">Dmitriy Paunin</a></p>
 <h2>Containerisation</h2>
 <p>Schema containers vs VMs</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9" data-theme="gaia" style="--theme:gaia;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9" data-marpit-fragments="2" data-theme="gaia" style="--theme:gaia;">
 <h2>Pourquoi des containers</h2>
-<p>On déploie souvent, avec un cycle de vie court, une application immuable.</p>
-<p>Si on veut upgrader, on déploie la nouvelle et on supprime l'ancienne.</p>
+<p>On déploie souvent en cycle court (jusqu'à plusieurs fois par jour)</p>
+<p>L'application devient immuable. Si on veut upgrader ou changer la configuration :</p>
+<ul>
+<li data-marpit-fragment="1">on ne modifie plus (source d'erreur)</li>
+<li data-marpit-fragment="2">on déploie la nouvelle et on supprime l'ancienne</li>
+</ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="10" data-theme="gaia" style="--theme:gaia;">
-<h2>Gains pour l'équipe qui développe/maintien l'application 1/2</h2>
-<p>Ce que les containers nous apportent techniquement :<br />
-=&gt; isoler une appli dans un filesystem qui lui est propre<br />
-=&gt; avec ses propres dépendances<br />
-=&gt; tout en mutualisant le kernel</p>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="10" data-marpit-fragments="3" data-theme="gaia" style="--theme:gaia;">
+<h2>Gains pour l'application 1/2</h2>
+<p>Ce que les containers nous apportent <em>techniquement</em> :</p>
+<ul>
+<li data-marpit-fragment="1">isoler une appli dans un filesystem qui lui est propre</li>
+<li data-marpit-fragment="2">avec ses propres dépendances</li>
+<li data-marpit-fragment="3">tout en mutualisant le kernel</li>
+</ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11" data-theme="gaia" style="--theme:gaia;">
-<h2>Gains pour l'équipe qui développe/maintien l'application 2/2</h2>
-<p>Ce que ça nous apporte en terme de gestion du cycle de vie de l'application<br />
-=&gt; des déploiements (et mises à jours) reproductibles entre environnements<br />
-=&gt; facilite la possibilité de migrer les utilisateurs par groupes<br />
-=&gt; facilite le retour arrière en cas de souci</p>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11" data-marpit-fragments="3" data-theme="gaia" style="--theme:gaia;">
+<h2>Gains pour l'application 2/2</h2>
+<p>Ce que ça nous apporte en terme de <em>gestion du cycle de vie</em></p>
+<ul>
+<li data-marpit-fragment="1">des déploiements et mises à jours reproductibles entre environnements (dev, test, prod)</li>
+<li data-marpit-fragment="2">facilite la possibilité de migrer les utilisateurs par groupes</li>
+<li data-marpit-fragment="3">facilite le retour arrière en cas de souci</li>
+</ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12" data-theme="gaia" style="--theme:gaia;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12" data-marpit-fragments="1" data-theme="gaia" style="--theme:gaia;">
 <h2>Limites de Docker</h2>
-<p>Techniquement : On a rien fait d'autre que de réinventer les jails, avec un un logo plus joli et une interface de management &quot;simple&quot;</p>
-<p>Sur mon poste, ça marche.</p>
-<p>Maintenant comment je fais pour gérer la haute disponibilité, la tolérance de panne, la gestion de plusieurs équipes, voire de plusieurs clients ?</p>
+<p>Techniquement : on a réinventé les jails avec une interface de management &quot;simple&quot;</p>
+<p><code>Sur mon poste, ça marche.</code></p>
+<p>Mais comment gérer :</p>
+<ul>
+<li data-marpit-fragment="1">la haute disponibilité, la tolérance de panne, la gestion de plusieurs équipes, voire de plusieurs clients ?</li>
+</ul>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-theme="gaia" style="--theme:gaia;">
 <h2>Kubernetes</h2>
-<p>Kubernetes donné à la CNCF, spin of de la Linux Foundation, par Google en 2015<br />
-Inspiré d'un outil interne</p>
+<p>&quot;Orchestrateur&quot; de containers Open Source</p>
+<p>Inspiré par un outil interne de Google</p>
+<p>Donné à la CNCF (spin-off de la Linux Foundation) en 2015</p>
+<p><img src="binaries/kubernetes_small.png" alt="center" /></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-theme="gaia" style="--theme:gaia;">
-<h2>Un outil complexe</h2>
-<p>Gif Lots of YAML</p>
+<h2>Un outil complexe... et verbeux</h2>
+<p><img src="binaries/lots_of_yaml.jpeg" alt="width:400 center" style="width:400px;" /><br />
+Crédits: TODO</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-theme="gaia" style="--theme:gaia;">
-<h2>On se retrouve avec des Dev qui ont un PaaS dans les mains</h2>
-<p>Sysadmins: &quot;It's secure because it's in a container&quot;</p>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-marpit-fragments="2" data-theme="gaia" style="--theme:gaia;">
+<h2>On se retrouve avec un PaaS dans les mains</h2>
+<ul>
+<li data-marpit-fragment="1">
+<p>Sysadmins/Devs: &quot;It's secure because it's in a container&quot;</p>
+</li>
+<li data-marpit-fragment="2">
 <p>Hackers:<br />
-<img src="binaries/dog.mp4" alt="" /></p>
+<video controls="controls" autoplay src="binaries/dog.mp4"></video></p>
+</li>
+</ul>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-theme="gaia" style="--theme:gaia;">
 <h2>Article dans la presse sur les gens qui avaient exposé leur Kubernetes console</h2>
 <p>Tesla</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-theme="gaia" style="--theme:gaia;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-marpit-fragments="2" data-theme="gaia" style="--theme:gaia;">
 <h2>Ne pas exposer la console</h2>
-<p>N'exposez pas la console.<br />
-=&gt; Vue incomplète de votre cluster et de votre métrologie<br />
-=&gt; lui préférer kubectl, grafana, ou des outils de supervision tiers</p>
+<p>N'exposez pas la console.</p>
+<ul>
+<li data-marpit-fragment="1">vue incomplète de votre cluster et de votre métrologie</li>
+<li data-marpit-fragment="2">lui préférer <strong>kubectl</strong>, <strong>Grafana</strong>, <strong>Prometheus</strong> et des outils de supervision tiers</li>
+</ul>
 <p>Les clouds providers la désactive</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-theme="gaia" style="--theme:gaia;">

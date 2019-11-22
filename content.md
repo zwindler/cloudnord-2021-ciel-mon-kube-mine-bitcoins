@@ -1,11 +1,15 @@
 ---
 marp: true
 theme: gaia
-
+markdown.marp.enableHtml: true
 ---
 
 <style>
 img[alt~="center"] {
+  display: block;
+  margin: 0 auto;
+}
+video["center"] {
   display: block;
   margin: 0 auto;
 }
@@ -19,7 +23,7 @@ img[alt~="center"] {
 
 ## ~# whoami
 
-<br>
+<br/>
 
 Denis GERMAIN
 
@@ -27,23 +31,25 @@ Ingénieur Cloud chez ![height:30](binaries/lectra.png)
 
 Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)
 
-**#geek #SF #courseAPied**
+**#geek** **#SF** **#courseAPied**
 
 ---
 
 ## Lectra
 
-On fait des grosses machines
+Leader mondial des solutions technologiques intégrées pour les entreprises utilisatrices de cuir ou textile
+
+![width:550 center](./binaries/Medium-Virga-MTO-cutting-job-0050.jpg)
 
 ---
 
-## Que fait un ingénieur cloud chez Lectra 1/2
+## Que fait un ingénieur cloud chez Lectra ?
 
-There is no cloud, it's just someone else's computer
+![width:450 center](./binaries/there_is_no_cloud.png)
 
 ---
 
-## Que fait un ingénieur cloud chez Lectra 2/2
+## Que fait un ingénieur cloud chez Lectra ?
 
 Nuage de logos
 
@@ -64,65 +70,91 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ## Containerisation
 
-Schema containers vs VMs
+Containers versus VMs
+
+![](binaries/Fullvirt_containers.png)
 
 ---
 
 ## Pourquoi des containers
 
-On déploie souvent, avec un cycle de vie court, une application immuable.
+On déploie souvent en cycle court (jusqu'à plusieurs fois par jour)
 
-Si on veut upgrader, on déploie la nouvelle et on supprime l'ancienne.
+L'application devient immuable. Si on veut upgrader ou changer la configuration :
 
----
-
-## Gains pour l'équipe qui développe/maintien l'application 1/2
-
-Ce que les containers nous apportent techniquement :
-=> isoler une appli dans un filesystem qui lui est propre
-=> avec ses propres dépendances
-=> tout en mutualisant le kernel
+* on ne modifie plus (source d'erreur)
+* on déploie la nouvelle et on supprime l'ancienne
 
 ---
 
-## Gains pour l'équipe qui développe/maintien l'application 2/2
+## Gains pour l'application 1/2
 
-Ce que ça nous apporte en terme de gestion du cycle de vie de l'application
-=> des déploiements (et mises à jours) reproductibles entre environnements
-=> facilite la possibilité de migrer les utilisateurs par groupes
-=> facilite le retour arrière en cas de souci
+Ce que les containers nous apportent *techniquement* :
+
+* isoler une appli dans un filesystem qui lui est propre
+* avec ses propres dépendances
+* tout en mutualisant le kernel
+
+---
+
+## Gains pour l'application 2/2
+
+Ce que ça nous apporte en terme de *gestion du cycle de vie*
+
+* des déploiements et mises à jours reproductibles entre environnements (dev, test, prod)
+* facilite la possibilité de migrer les utilisateurs par groupes
+* facilite le retour arrière en cas de souci
 
 ---
 
 ## Limites de Docker
 
-Techniquement : On a rien fait d'autre que de réinventer les jails, avec un un logo plus joli et une interface de management "simple"
+Techniquement : on a réinventé les jails avec une interface de management "simple"
 
-Sur mon poste, ça marche. 
+```Sur mon poste, ça marche.```
 
-Maintenant comment je fais pour gérer la haute disponibilité, la tolérance de panne, la gestion de plusieurs équipes, voire de plusieurs clients ?
+Mais comment gérer :
+
+* la haute disponibilité, la tolérance de panne, la gestion de plusieurs équipes, voire de plusieurs clients ?
 
 ---
 
 ## Kubernetes
 
-Kubernetes donné à la CNCF, spin of de la Linux Foundation, par Google en 2015
-Inspiré d'un outil interne
+"Orchestrateur" de containers Open Source
+
+Inspiré par un outil interne de Google
+
+Donné à la CNCF (spin-off de la Linux Foundation) en 2015
+
+![center](binaries/kubernetes_small.png)
 
 ---
 
-## Un outil complexe
+## Un outil complexe... et verbeux
 
-Gif Lots of YAML
+![width:400 center](binaries/lots_of_yaml.jpeg)
+Crédits: TODO
 
 ---
 
-## On se retrouve avec des Dev qui ont un PaaS dans les mains
+## Un outil complexe... et verbeux
 
-Sysadmins: "It's secure because it's in a container"
+---
 
-Hackers:
-![center](binaries/dog.mp4)
+
+## Architecture simplifiée de Kubernetes
+
+![center width:700](binaries/kubernetes-control-plane.png)
+
+---
+
+## On se retrouve avec un PaaS dans les mains
+
+Sysadmins/Devs: "It's secure because it's in a container"
+
+Hackers: 
+<video controls="controls" autoplay src="binaries/dog.mp4"></video>
 
 ---
 
@@ -135,8 +167,9 @@ Tesla
 ## Ne pas exposer la console
 
 N'exposez pas la console.
-=> Vue incomplète de votre cluster et de votre métrologie
-=> lui préférer kubectl, grafana, ou des outils de supervision tiers
+
+* vue incomplète de votre cluster et de votre métrologie
+* lui préférer **kubectl**, **Grafana**, **Prometheus** et des outils de supervision tiers
 
 Les clouds providers la désactive
 
@@ -172,8 +205,9 @@ Le gif avec le chien dans un parc pour enfant
 
 ## Pas de container Root !
 
-I'm root
+![center](binaries/im_root.png)
 
+Par défaut
 This means that a container's user ID table maps to the host's user table, and running a process as the root user inside a container runs it as root on the host. Although we have layered security mechanisms to prevent container breakouts, running as root inside the container is still not recommended.
 
 Many container images use the root user to run PID 1 - if that process is compromised, the attacker has root in the container, and any mis-configurations become much easier to exploit.
@@ -182,11 +216,9 @@ Ca peut poser des problèmes pour certaines images Docker => talk sur tous les w
 
 ---
 
-## Pod security policy ?
+## Pod Security Policy
 
-PodSecurityPolicy
-
-This PodSecurityPolicy snippet prevents running processes as root inside a container, and also escalation to root:
+Kubernetes permet l'ajout de politiques de conformités, notamment dans le but d'imposer des règles pour les Pods
 
 ```YAML
 # Required to prevent escalations to root.
@@ -195,14 +227,6 @@ runAsUser:
   # Require the container to run without root privileges.
   rule: 'MustRunAsNonRoot'
 ```
-
----
-
-## Falco
-
----
-
-## One policy agent ?
 
 ---
 
@@ -242,17 +266,17 @@ Zalando (mise à jour)
 
 ## Conclusion
 
-Ne faites pas du Kubernetes si vous n'en avez pas besoin !
+* Ne faites pas du Kubernetes si vous n'en avez pas besoin !
 
-La sécurité, ce n'est ni un/des outils, ni uniquement l'affaire des Ops. C'est une démarche globale dans l'entreprise.
+* La sécurité, ce n'est ni des outils, ni uniquement l'affaire des Ops. C'est une démarche globale dans l'entreprise.
 
-Avec suffisament de moyen, vous serez attaqués. Le but du jeu, c'est de savoir si vous voulez laisser la porte grande ouverte ou si vous allez rendre la vie de vos attaquants pénible.
+* Avec suffisament de moyen, vous serez attaqués.
 
 ---
 
 ## That's all folks
 
-Image that's all folks
+![width:800 center](binaries/thatsall.jpg)
 
 ---
 
