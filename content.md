@@ -2,14 +2,11 @@
 marp: true
 theme: gaia
 markdown.marp.enableHtml: true
+paginate: true
 ---
 
 <style>
 img[alt~="center"] {
-  display: block;
-  margin: 0 auto;
-}
-video["center"] {
   display: block;
   margin: 0 auto;
 }
@@ -32,6 +29,8 @@ Ingénieur Cloud chez ![height:30](binaries/lectra.png)
 Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)
 
 **#geek** **#SF** **#courseAPied**
+
+![bg fit right:40%](binaries/denis.jpg)
 
 ---
 
@@ -68,97 +67,102 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ---
 
-## Containerisation
+## La mode des containers
 
-Containers versus VMs
+> Un **outil** qui permet d'empaqueter une application et ses dépendances et qui pourra être exécuté sur n'importe quel serveur
 
-![](binaries/Fullvirt_containers.png)
-
----
-
-## Pourquoi des containers
-
-On déploie souvent en cycle court (jusqu'à plusieurs fois par jour)
-
-L'application devient immuable. Si on veut upgrader ou changer la configuration :
-
-* on ne modifie plus (source d'erreur)
-* on déploie la nouvelle et on supprime l'ancienne
+* Il existe de nombreuses implémentations des containers
+* ![width:200](binaries/docker.png) est très utilisé depuis quelques années 
+  * utilise des fonctionnalités du kernel Linux
+  * fourni une interface "simple" et un magasin d'images
 
 ---
 
-## Gains pour l'application 1/2
+## Un container n'est pas une machine virtuelle
 
-Ce que les containers nous apportent *techniquement* :
+<br/>
 
-* isoler une appli dans un filesystem qui lui est propre
-* avec ses propres dépendances
-* tout en mutualisant le kernel
+![width:1000 center](binaries/Fullvirt_containers.png)
 
 ---
 
-## Gains pour l'application 2/2
+## Pourquoi Docker ?
 
-Ce que ça nous apporte en terme de *gestion du cycle de vie*
+Pratique si on déploie de "petites" applications, souvent, en cycle court (jusqu'à plusieurs fois par jour)
 
-* des déploiements et mises à jours reproductibles entre environnements (dev, test, prod)
-* facilite la possibilité de migrer les utilisateurs par groupes
-* facilite le retour arrière en cas de souci
+L'application devient immuable
+
+* Si on veut l'upgrader ou changer sa configuration :
+  * on ne modifie pas le container (source d'erreur)
+  * on déploie la nouvelle version et on supprime l'ancienne
+
+<br/>
+
+[blog.zwindler.fr / Should we have containers ?](https://blog.zwindler.fr/2016/08/25/when-should-we-have-containers/)
+
+---
+
+## Gains apportés par Docker
+
+* applications mutualisées sur un même hardware
+* isolées les unes des autres (processus/FS/réseau/RAM)
+* des déploiements et mises à jours reproductibles entre serveurs
+  * et donc entre environnements (dev, test, prod)
 
 ---
 
 ## Limites de Docker
 
-Techniquement : on a réinventé les jails avec une interface de management "simple"
+**Techniquement** : on a réinventé les jails avec une interface de management "simple"
 
 ```Sur mon poste, ça marche.```
 
 Mais comment gérer :
 
-* la haute disponibilité, la tolérance de panne, la gestion de plusieurs équipes, voire de plusieurs clients ?
+* la haute disponibilité ?
+* la tolérance de panne ?
+* les droits d'accès ?
 
 ---
 
 ## Kubernetes
 
-"Orchestrateur" de containers Open Source
+* "Orchestrateur" de containers
 
-Inspiré par un outil interne de Google
+* Inspiré par un outil interne de Google
 
-Donné à la CNCF (spin-off de la Linux Foundation) en 2015
+* Donné à la CNCF (spin-off Linux Foundation)
+
+* Open Sourcé en 2015
 
 ![center](binaries/kubernetes_small.png)
 
 ---
 
 ## Un outil complexe... et verbeux
+<br/>
 
-![width:400 center](binaries/lots_of_yaml.jpeg)
-Crédits: TODO
+![width:1150 center](binaries/lots_of_yaml2.jpeg)
+Crédits: [Jake Likes Onions](https://jakelikesonions.com/)
 
 ---
 
 ## Un outil complexe... et verbeux
 
----
+Lancer nginx dans Docker ![center width:500](binaries/docker_nginx.png)
 
-
-## Architecture simplifiée de Kubernetes
-
-![center width:700](binaries/kubernetes-control-plane.png)
+Lancer nginx dans Kubernetes 
+![center width:580](binaries/nginx-yaml.png)
 
 ---
 
-## On se retrouve avec un PaaS dans les mains
+<!-- _class: lead -->
 
-Sysadmins/Devs: "It's secure because it's in a container"
-
-Hackers: 
-<video controls="controls" autoplay src="binaries/dog.mp4"></video>
+# "What could go wrong ?"
 
 ---
 
-## Article dans la presse sur les gens qui avaient exposé leur Kubernetes console
+## Un outil complexe ? Pas grave, il y a une UI !
 
 Tesla
 
@@ -197,9 +201,13 @@ Bon exemple : Monzo bank
 
 ---
 
-## Les failles dans les applis
+## Sécurité dans les applications ?
 
-Le gif avec le chien dans un parc pour enfant
+Sysadmins/Devs: "It's secure because it's in a container"
+
+Hackers: ![center](binaries/doginplaypen.gif)
+
+[@sylvielorxu](https://twitter.com/sylvielorxu/status/1152511215941369856)
 
 ---
 
@@ -282,4 +290,16 @@ Zalando (mise à jour)
 
 ## Questions ?
 
-Image des questions ?
+![center width:500](binaries/rage-face-etonnant.png)
+
+---
+
+# Backup slides
+
+---
+
+## Architecture simplifiée de Kubernetes
+
+![center width:700](binaries/kubernetes-control-plane.png)
+
+---
