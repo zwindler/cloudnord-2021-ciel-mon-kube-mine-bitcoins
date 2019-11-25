@@ -50,7 +50,19 @@ Leader mondial des solutions technologiques intégrées pour les entreprises uti
 
 ## Que fait un ingénieur cloud chez Lectra ?
 
-Nuage de logos
+![center width:1100](binaries/logos.png)
+
+---
+
+## D’ailleurs… je cherche des collègues !
+
+* Un·e OPS pour créer des clusters dans le cloud 👩‍💻 👨‍💻
+
+* Et des Devs pour les ~~casser~~ faire scaler 🤣
+
+* Et plus encore
+
+* GOTO => https://www.lectra.com/fr/carrieres/europe
 
 ---
 
