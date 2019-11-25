@@ -30,7 +30,7 @@ Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)
 
 **#geek** **#SF** **#courseAPied**
 
-![bg fit right:40%](binaries/denis.jpg)
+![bg fit right:40%](binaries/denis.png)
 
 ---
 
@@ -217,9 +217,7 @@ Bon exemple : Monzo bank
 
 Sysadmins/Devs: "It's secure because it's in a container"
 
-Hackers: ![center](binaries/doginplaypen.gif)
-
-[@sylvielorxu](https://twitter.com/sylvielorxu/status/1152511215941369856)
+Hackers: ![center width:350](binaries/doginplaypen.gif) [@sylvielorxu](https://twitter.com/sylvielorxu/status/1152511215941369856) 
 
 ---
 
@@ -307,6 +305,8 @@ Zalando (mise à jour)
 ---
 
 # Backup slides
+
+<!-- _class: lead -->
 
 ---
 
