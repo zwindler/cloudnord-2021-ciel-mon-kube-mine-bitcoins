@@ -43,6 +43,7 @@ class: lead
 * [2018 : Cryptojacking chez Tesla](https://redlock.io/blog/cryptojacking-tesla)
 * [2019 : Cryptojacking chez jwplayer](https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205)
 * [Plus dinfos sur le cryptominer XMrig](https://news.sophos.com/fr-fr/2019/05/31/eternel-retour-cryptomineur-xmrig/)
+* [ZDNET : des hackers utilisent les API de managmeent de Docker exposées sur le net](https://www.zdnet.com/article/a-hacking-group-is-hijacking-docker-systems-with-exposed-api-endpoints/)
 
 ---
 
