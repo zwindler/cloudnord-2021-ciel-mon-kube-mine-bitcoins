@@ -104,7 +104,7 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ---
 
-## TODO Ce n'est pas une machine virtuelle !
+## Ce n'est pas une machine virtuelle !
 
 <br/>
 
@@ -130,7 +130,7 @@ L'application devient immuable
 
 ## Les promesses de Docker
 
-* Rend le développement *facile* pour le Dev
+* Rend l'infra *facile* pour le Dev
 * Economies hardware (par rapport aux VMs)
 * Sécurité (isolation des applications)
 * Immutabilité (déploiements et mises à jours reproductibles)
@@ -143,11 +143,11 @@ L'application devient immuable
 
 ## Retour à la réalité
 
-**Techniquement** : on a réinventé les *jails* avec une interface de management "simple"
+**Techniquement** : on a réinventé les `jail` avec une interface de management "simple"
 
-**Et on a toujours le Dev** : ```Sur mon poste, ça marche.```
+**Et on a toujours le Dev qui nous dis** : ```Sur mon poste, ça marche.```
 
-Mais surtout, on ne sait pas comment gérer :
+Mais surtout, on ne sait toujours pas comment gérer :
 
 * la haute disponibilité ?
 * la tolérance de panne ?
@@ -171,16 +171,16 @@ Mais surtout, on ne sait pas comment gérer :
 
 > Kubernetes définit un certain nombre d'objets qui, ensemble, fournissent des mécanismes pour déployer, maintenir et mettre à l’échelle des applications
 
-![width:800 center](binaries/lots_of_yaml2.jpeg)
-Crédits: [Jake Likes Onions](https://jakelikesonions.com/)
+* *Node, Pod, Deployment, ReplicaSet, DaemonSet, StatefulSet, ...*
+* *Role, RoleBinding, ClusterRoleBinding, ServiceAccount* pour la gestion des droits
+* ...
 
 ---
 
-## C'est aussi un outil verbeux
+## Par extension, c'est un outil verbeux
 
-Lancer nginx dans Docker ![center width:500](binaries/docker_nginx.png)
-
-Lancer nginx dans Kubernetes
+Lancer nginx dans Docker vs dans Kubernetes
+![center width:500](binaries/docker_nginx.png) 
 ![center width:580](binaries/nginx-yaml.png)
 
 ---
@@ -194,7 +194,7 @@ Lancer nginx dans Kubernetes
 
 ## Un outil complexe ? Pas grave, il y a une UI !
 
-L'histoire récente regorge de faille et d'exploit sur des interface de management ouvertes sur Internet
+L'histoire récente regorge de failles et d'exploits sur des interface de management ouvertes sur Internet
 
 * phpMyAdmin
 
@@ -222,46 +222,109 @@ L'histoire récente regorge de faille et d'exploit sur des interface de manageme
 
 ---
 
-## Moralité : n'exposez pas la console
+## Game over
 
-Vraiment. N'exposez pas la console.
-
-* Vue incomplète de votre cluster et de votre métrologie
-* Préférez lui **kubectl**, **Grafana**, **Prometheus** et des outils de supervision tiers
-* Les clouds providers la désactivent
+![width:400](binaries/tesla.png) ![width:400](binaries/monero_logo.png)
 
 ---
 
-## TODO Contrôle d'accès dans Kubernetes
+## Moralité : n'exposez pas la console
+
+Vraiment. 
+
+**N'exposez pas la console. Ne la déployez même pas.**
+
+* Vue incomplète de votre cluster et de votre métrologie
+* Préférez lui `kubectl`, **Grafana**, **Prometheus** ou des outils de supervision tiers
+* Les clouds providers la désactivent par défaut
+
+---
+
+## Contrôle d'accès dans Kubernetes
 
 * Avant la 1.7, ABAC (Attribute-based access control)
+<br/>
+
 * Depuis la 1.7, RBAC (Role-based access control)
+  * Permet de créer de donner des droits fins, par type de ressource et type d'accès
+  * De les affecter à des groupes d'utilisateurs ou d'applications
+
+* Principe de moindre privilège
+
+---
+
+## Le RBAC par l'exemple
+
+![width:500](binaries/role.png) ![width:500](binaries/rolebinding.png)
+
+Ex. **alice** a le droit de lister les containers dans le namespace **default**, mais pas de les supprimer ni les créer.
+
+---
+
+## En cas de compromission
+
+Si un compte utilisateur/application est compromis, les droits d'accès seront restreints à un périmètre donné, limité par :
+* namespace (subdivision du cluster)
+* types d'actions précis pour chaque type de ressources
+
+---
+
+## Dans la pratique
+
+Le **principe des moindres privilèges** est un vrai chantier
+* à mettre en place dès le début du cycle de développement
+* difficile à appliquer *a posteriori* (sauf à tout bloquer)
+
+Pour auditer le RBAC :
+* kubectl auth can-i
+* kubectl who-can
+* [et plein d'autres](https://twitter.com/learnk8s/status/1190859981811277824?s=19)
+
+---
+
+<!-- _class: lead -->
+
+# Le réseau
 
 ---
 
 ## TODO TLS everywhere
 
+Si les flux ont été chiffrés, il sera plus difficile de récupérer des identifiants.
+
 ---
 
-## TODO Mettre des Network policies
+## TODO Mettre des Network Policies
 
-By default, Kubernetes networking allows all pod to pod traffic; this can be restricted using a Network Policy
+Par défaut, la gestion du réseau virtuel dans Kubernetes autorise toute application à se connecter à n'importe quelle autre.
 
-Tout le monde discute avec tout le monde. Un attaquant qui prend la main sur un container peut, s'il a suffisament d'outils, scanner tout le réseau
-
-Si on a mis du TLS partout, plus complexe. Mais ce n'et pas suffisant
+Théoriquement, un attaquant qui prend la main sur un container peut, s'il a suffisament d'outils, scanner tout le cluster.
 
 Schema
 
-Bon exemple : Monzo bank
+---
+
+## Les Networks Policies, le bon exemple
+
+Monzo Bank a mis en place des [Network Policies pour ses 1500 microservices](https://monzo.com/blog/we-built-network-isolation-for-1-500-services) : ![center](binaries/monzo2.png)
 
 ---
 
-## TODO Service Mesh 
+## Service Mesh ?
+
+Mettre en place des **Network Policies** peut être complexe... mais on peut faire encore plus complexe !
+
+![bg right:55% fit](binaries/servicemesh.jpg)
 
 ---
 
-## TODO Sécurité dans les applications ?
+<!-- _class: lead -->
+
+# Sécuriser les containers
+
+---
+
+## It's secure
 
 Sysadmins/Devs: "It's secure because it's in a container"
 
@@ -296,6 +359,10 @@ runAsUser:
 
 ---
 
+## TODO Sécurité dans les applications ?
+
+---
+
 ## TODO Scan d'images
 
 Clair / Anchore
@@ -310,13 +377,19 @@ Falco
 
 ---
 
-## Les failles dans Kubernetes
+<!-- _class: lead -->
+
+# Sécuriser la plateforme
+
+---
+
+## TODO Les failles dans Kubernetes
 
 CVE
 
 ---
 
-## Kubernetes Security Audit
+## TODO Kubernetes Security Audit
 
 Début aout, la CNCF a sorti un kit permettant d'auditer les clusters Kubernetes et les composants gravitant autour (CoreDNS, Envoy et Prometheus lors du PoC, mais ouverts à tous les autres projets maintenant).
 
@@ -330,13 +403,13 @@ Zalando (mise à jour)
 
 ---
 
-## TODO Mise à jour Zalando
+## TODO Mise à jour Zalando
 
 --- 
 
 <!-- _class: lead -->
 
-# Promis, demain je sécurise
+# Promis, demain, je sécurise
 
 ![](binaries/wrap.png)
 
@@ -346,6 +419,7 @@ Zalando (mise à jour)
 
 * Ne faites pas du Kubernetes si vous n'en avez pas besoin !
   * [blog : combien de problèmes ces stacks ont générés ?](https://blog.zwindler.fr/2019/09/03/concerning-kubernetes-combien-de-problemes-ces-stacks-ont-generes/)
+<br/>
 
 * Il y a beaucoup de choses à sécuriser dans Kube, et pas que de l'infra. Sécurisez dès le début et formez vos Dev !
 
