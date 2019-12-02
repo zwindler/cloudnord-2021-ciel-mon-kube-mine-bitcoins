@@ -10,11 +10,24 @@ img[alt~="center"] {
   display: block;
   margin: 0 auto;
 }
+blockquote {
+  background: #ffedcc;
+  border-left: 10px solid #d1bf9d;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+blockquote:before{
+  content: unset;
+}
+blockquote:after{
+  content: unset;
+}
 </style>
 
 <!-- _class: lead -->
 
-# Ciel, mon Kubernetes mine des Bitcoins
+# Ciel ! Mon Kubernetes mine des 
+# ![width:60](binaries/Bitcoin.svg.png) Bitcoins ![width:60](binaries/Bitcoin.svg.png)
 
 ---
 
@@ -38,7 +51,7 @@ Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)
 
 Leader mondial des solutions technologiques intégrées pour les entreprises utilisatrices de cuir ou textile
 
-![width:550 center](./binaries/Medium-Virga-MTO-cutting-job-0050.jpg)
+* ![width:550 center](./binaries/Medium-Virga-MTO-cutting-job-0050.jpg)
 
 ---
 
@@ -68,7 +81,8 @@ Leader mondial des solutions technologiques intégrées pour les entreprises uti
 
 <!-- _class: lead -->
 
-# Ciel, mon Kubernetes mine des bitcoins !
+# Ciel ! Mon Kubernetes mine des 
+# ![width:60](binaries/Bitcoin.svg.png) Bitcoins ![width:60](binaries/Bitcoin.svg.png)
 
 ---
 
@@ -81,7 +95,7 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ## La mode des containers
 
-> Un **outil** qui permet d'empaqueter une application et ses dépendances et qui pourra être exécuté sur n'importe quel serveur
+> **Outil** qui permet d'empaqueter une application et ses dépendances. Elle pourra être exécuté sur n'importe quel serveur
 
 * Il existe de nombreuses implémentations des containers
 * ![width:200](binaries/docker.png) est très utilisé depuis quelques années 
@@ -90,7 +104,7 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ---
 
-## Un container n'est pas une machine virtuelle
+## TODO Ce n'est pas une machine virtuelle !
 
 <br/>
 
@@ -98,9 +112,9 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ---
 
-## Pourquoi Docker ?
+## Pourquoi utiliser les containers Docker ?
 
-Pratique si on déploie de "petites" applications, souvent, en cycle court (jusqu'à plusieurs fois par jour)
+Pratique si on déploie souvent de "petites" applications, en cycle (très) courts
 
 L'application devient immuable
 
@@ -114,22 +128,26 @@ L'application devient immuable
 
 ---
 
-## Gains apportés par Docker
+## Les promesses de Docker
 
-* applications mutualisées sur un même hardware
-* isolées les unes des autres (processus/FS/réseau/RAM)
-* des déploiements et mises à jours reproductibles entre serveurs
-  * et donc entre environnements (dev, test, prod)
+* Rend le développement *facile* pour le Dev
+* Economies hardware (par rapport aux VMs)
+* Sécurité (isolation des applications)
+* Immutabilité (déploiements et mises à jours reproductibles)
+
+<br/>
+
+![center width:400](binaries/docker.png)
 
 ---
 
-## Limites de Docker
+## Retour à la réalité
 
-**Techniquement** : on a réinventé les jails avec une interface de management "simple"
+**Techniquement** : on a réinventé les *jails* avec une interface de management "simple"
 
-```Sur mon poste, ça marche.```
+**Et on a toujours le Dev** : ```Sur mon poste, ça marche.```
 
-Mais comment gérer :
+Mais surtout, on ne sait pas comment gérer :
 
 * la haute disponibilité ?
 * la tolérance de panne ?
@@ -139,9 +157,7 @@ Mais comment gérer :
 
 ## Kubernetes
 
-* "Orchestrateur" de containers
-
-* Inspiré par un outil interne de Google
+* "Orchestrateur" de containers, inspiré par un outil interne de Google
 
 * Donné à la CNCF (spin-off Linux Foundation)
 
@@ -151,55 +167,83 @@ Mais comment gérer :
 
 ---
 
-## Un outil complexe... et verbeux
-<br/>
+## C'est une outil puissant et complexe
 
-![width:1150 center](binaries/lots_of_yaml2.jpeg)
+> Kubernetes définit un certain nombre d'objets qui, ensemble, fournissent des mécanismes pour déployer, maintenir et mettre à l’échelle des applications
+
+![width:800 center](binaries/lots_of_yaml2.jpeg)
 Crédits: [Jake Likes Onions](https://jakelikesonions.com/)
 
 ---
 
-## Un outil complexe... et verbeux
+## C'est aussi un outil verbeux
 
 Lancer nginx dans Docker ![center width:500](binaries/docker_nginx.png)
 
-Lancer nginx dans Kubernetes 
+Lancer nginx dans Kubernetes
 ![center width:580](binaries/nginx-yaml.png)
 
 ---
 
 <!-- _class: lead -->
 
-# "What could go wrong ?"
+# What could possibly go wrong ?
+![width:500](binaries/whatcouldgowrong.png)
 
 ---
 
 ## Un outil complexe ? Pas grave, il y a une UI !
 
-Tesla
+L'histoire récente regorge de faille et d'exploit sur des interface de management ouvertes sur Internet
+
+* phpMyAdmin
+
+* tomcat Manager
+
+* webmin
+
+* ...
 
 ---
 
-## Ne pas exposer la console
+## Et pourtant... Tesla ![width:50](binaries/tesla.png)...
 
-N'exposez pas la console.
+![center](binaries/dashboard.png)
 
-* vue incomplète de votre cluster et de votre métrologie
-* lui préférer **kubectl**, **Grafana**, **Prometheus** et des outils de supervision tiers
-
-Les clouds providers la désactive
+![center height:400](binaries/kubernetes-dashboard.png)
 
 ---
 
-## Mettre du RBAC
+## Not password protected
+
+> The hackers had infiltrated Tesla’s Kubernetes console which was **not password protected** / [Source : redlock.io](https://redlock.io/blog/cryptojacking-tesla)
+
+![width:500 center](binaries/redlock.png)
 
 ---
 
-## TLS everywhere
+## Moralité : n'exposez pas la console
+
+Vraiment. N'exposez pas la console.
+
+* Vue incomplète de votre cluster et de votre métrologie
+* Préférez lui **kubectl**, **Grafana**, **Prometheus** et des outils de supervision tiers
+* Les clouds providers la désactivent
 
 ---
 
-## Mettre des Network policies
+## TODO Contrôle d'accès dans Kubernetes
+
+* Avant la 1.7, ABAC (Attribute-based access control)
+* Depuis la 1.7, RBAC (Role-based access control)
+
+---
+
+## TODO TLS everywhere
+
+---
+
+## TODO Mettre des Network policies
 
 By default, Kubernetes networking allows all pod to pod traffic; this can be restricted using a Network Policy
 
@@ -213,7 +257,11 @@ Bon exemple : Monzo bank
 
 ---
 
-## Sécurité dans les applications ?
+## TODO Service Mesh 
+
+---
+
+## TODO Sécurité dans les applications ?
 
 Sysadmins/Devs: "It's secure because it's in a container"
 
@@ -221,7 +269,7 @@ Hackers: ![center width:350](binaries/doginplaypen.gif) [@sylvielorxu](https://t
 
 ---
 
-## Pas de container Root !
+## TODO Pas de container Root !
 
 ![center](binaries/im_root.png)
 
@@ -248,13 +296,13 @@ runAsUser:
 
 ---
 
-## Scan d'images
+## TODO Scan d'images
 
 Clair / Anchore
 
 ---
 
-## Scan temps réel
+## TODO Scan temps réel
 
 IDS
 
@@ -274,7 +322,7 @@ Début aout, la CNCF a sorti un kit permettant d'auditer les clusters Kubernetes
 
 ---
 
-## Mettez à jour régulièrement
+## TODO Moralité : mettez à jour régulièrement !
 
 Pas forcément simple
 
@@ -282,13 +330,24 @@ Zalando (mise à jour)
 
 ---
 
+## TODO Mise à jour Zalando
+
+--- 
+
+<!-- _class: lead -->
+
+# Promis, demain je sécurise
+
+![](binaries/wrap.png)
+
+---
+
 ## Conclusion
 
 * Ne faites pas du Kubernetes si vous n'en avez pas besoin !
+  * [blog : combien de problèmes ces stacks ont générés ?](https://blog.zwindler.fr/2019/09/03/concerning-kubernetes-combien-de-problemes-ces-stacks-ont-generes/)
 
-* La sécurité, ce n'est ni des outils, ni uniquement l'affaire des Ops. C'est une démarche globale dans l'entreprise.
-
-* Avec suffisament de moyen, vous serez attaqués.
+* Il y a beaucoup de choses à sécuriser dans Kube, et pas que de l'infra. Sécurisez dès le début et formez vos Dev !
 
 ---
 
@@ -298,7 +357,7 @@ Zalando (mise à jour)
 
 ---
 
-## Questions ?
+## Des questions ?
 
 ![center width:500](binaries/rage-face-etonnant.png)
 
@@ -313,5 +372,3 @@ Zalando (mise à jour)
 ## Architecture simplifiée de Kubernetes
 
 ![center width:700](binaries/kubernetes-control-plane.png)
-
----
