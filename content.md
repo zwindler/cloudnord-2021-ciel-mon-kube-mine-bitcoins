@@ -157,7 +157,7 @@ Mais surtout, on ne sait toujours pas comment gérer :
 
 ## Kubernetes
 
-* "Orchestrateur" de containers, inspiré par un outil interne de Google
+* Orchestrateur de containers, inspiré par un outil interne de Google
 
 * Donné à la CNCF (spin-off Linux Foundation)
 
@@ -180,7 +180,7 @@ Mais surtout, on ne sait toujours pas comment gérer :
 ## Par extension, c'est un outil verbeux
 
 Lancer nginx dans Docker vs dans Kubernetes
-![center width:500](binaries/docker_nginx.png) 
+![center width:500](binaries/docker_nginx.png)
 ![center width:580](binaries/nginx-yaml.png)
 
 ---
@@ -188,6 +188,7 @@ Lancer nginx dans Docker vs dans Kubernetes
 <!-- _class: lead -->
 
 # What could possibly go wrong ?
+
 ![width:500](binaries/whatcouldgowrong.png)
 
 ---
@@ -198,7 +199,7 @@ L'histoire récente regorge de failles et d'exploits sur des interface de manage
 
 * phpMyAdmin
 
-* tomcat Manager
+* tomcat-manager
 
 * webmin
 
@@ -224,7 +225,7 @@ L'histoire récente regorge de failles et d'exploits sur des interface de manage
 
 ## Game over
 
-![width:400](binaries/tesla.png) ![width:400](binaries/monero_logo.png)
+![center width:300](binaries/monero_logo.png)
 
 ---
 
@@ -243,8 +244,6 @@ Vraiment.
 ## Contrôle d'accès dans Kubernetes
 
 * Avant, ABAC (Attribute-based access control)
-
-<br/>
 
 * Depuis la 1.6 (2017), RBAC (Role-based access control)
   * Permet de créer de donner des droits fins, par type de ressource et type d'accès
@@ -294,7 +293,7 @@ Pour auditer le RBAC :
 
 ## Du TLS partout
 
-Tous les flux doivent être chiffrés, en particulier ceux de Kubernetes lui-même (api-server, etcd, ...)
+Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-même (api-server, etcd, ...)
 
 **Point Captain Obvious** : Si les flux ont été chiffrés, il sera plus difficile de récupérer des identifiants
 
@@ -304,7 +303,7 @@ Tous les flux doivent être chiffrés, en particulier ceux de Kubernetes lui-mê
 
 ## Mettre des Network Policies
 
-Par défaut, la gestion du réseau virtuel dans Kubernetes autorise toute application à se connecter à n'importe quelle autre.
+Par défaut, la gestion du réseau virtuel dans Kubernetes autorise tout container à se connecter à n'importe quel autre.
 
 ![](binaries/network_policy_yaml.png) ![](binaries/network_policy.png)
 
@@ -340,7 +339,7 @@ Mettre en place des **Network Policies** peut être complexe... mais on peut fai
 
 ## Pas de container exécuté en tant que Root !
 
-Kubernetes utilisent toujours la table des users ID de l'hôte
+Kubernetes utilise (pour l'instant) la table des users ID de l'hôte
 
 Si le binaire contenu dans l'image Docker est lancé en tant que **root** (souvent le cas), un attaquant a plus de chance de sortir du container.
 
@@ -364,13 +363,23 @@ runAsUser:
 
 ---
 
-## TODO Sécurité dans les applications ?
+## Réduire la surface d'attaque
+
+Limiter l'impact d'une compromission :
+
+* Le moins de dépendances possibles
+* Ne pas ajouter des binaires utiles aux attaquants
+  * oubliez `ping`, `traceroute`, `gcc`, ...
+* Multistage build (images build vs images run)
 
 ---
 
-## TODO Scan d'images
+## Scan statique des images
 
-Clair / Anchore
+Des CVE sortent sur **NodeJS**, **.Net** et autre **JVM** toutes les semaines
+
+Il existe des outils d'analyse statiques des images Docker que vous utilisez sur votre cluster
+![center width:400](binaries/clair-logo.png) ![center width:400](binaries/anchore.png)
 
 ---
 
