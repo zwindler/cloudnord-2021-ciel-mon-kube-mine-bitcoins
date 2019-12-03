@@ -208,13 +208,13 @@ L'histoire récente regorge de failles et d'exploits sur des interface de manage
 
 ## Et pourtant... Tesla ![width:50](binaries/tesla.png)...
 
-![center](binaries/dashboard.png)
+![center width:1100](binaries/dashboard.png)
 
 ![center height:400](binaries/kubernetes-dashboard.png)
 
 ---
 
-## Not password protected
+## "Not password protected"
 
 > The hackers had infiltrated Tesla’s Kubernetes console which was **not password protected** / [Source : redlock.io](https://redlock.io/blog/cryptojacking-tesla)
 
@@ -230,7 +230,7 @@ L'histoire récente regorge de failles et d'exploits sur des interface de manage
 
 ## Moralité : n'exposez pas la console
 
-Vraiment. 
+Vraiment.
 
 **N'exposez pas la console. Ne la déployez même pas.**
 
@@ -242,10 +242,11 @@ Vraiment.
 
 ## Contrôle d'accès dans Kubernetes
 
-* Avant la 1.7, ABAC (Attribute-based access control)
+* Avant, ABAC (Attribute-based access control)
+
 <br/>
 
-* Depuis la 1.7, RBAC (Role-based access control)
+* Depuis la 1.6 (2017), RBAC (Role-based access control)
   * Permet de créer de donner des droits fins, par type de ressource et type d'accès
   * De les affecter à des groupes d'utilisateurs ou d'applications
 
@@ -264,6 +265,7 @@ Ex. **alice** a le droit de lister les containers dans le namespace **default**,
 ## En cas de compromission
 
 Si un compte utilisateur/application est compromis, les droits d'accès seront restreints à un périmètre donné, limité par :
+
 * namespace (subdivision du cluster)
 * types d'actions précis pour chaque type de ressources
 
@@ -272,10 +274,12 @@ Si un compte utilisateur/application est compromis, les droits d'accès seront r
 ## Dans la pratique
 
 Le **principe des moindres privilèges** est un vrai chantier
+
 * à mettre en place dès le début du cycle de développement
 * difficile à appliquer *a posteriori* (sauf à tout bloquer)
 
 Pour auditer le RBAC :
+
 * kubectl auth can-i
 * kubectl who-can
 * [et plein d'autres](https://twitter.com/learnk8s/status/1190859981811277824?s=19)
@@ -284,23 +288,25 @@ Pour auditer le RBAC :
 
 <!-- _class: lead -->
 
-# Le réseau
+# "C’est toujours la faute du réseau"
 
 ---
 
-## TODO TLS everywhere
+## Du TLS partout
 
-Si les flux ont été chiffrés, il sera plus difficile de récupérer des identifiants.
+Tous les flux doivent être chiffrés, en particulier ceux de Kubernetes lui-même (api-server, etcd, ...)
+
+**Point Captain Obvious** : Si les flux ont été chiffrés, il sera plus difficile de récupérer des identifiants
+
+![bg right:40% fit](binaries/encrypttraffic.jpg)
 
 ---
 
-## TODO Mettre des Network Policies
+## Mettre des Network Policies
 
 Par défaut, la gestion du réseau virtuel dans Kubernetes autorise toute application à se connecter à n'importe quelle autre.
 
-Théoriquement, un attaquant qui prend la main sur un container peut, s'il a suffisament d'outils, scanner tout le cluster.
-
-Schema
+![](binaries/network_policy_yaml.png) ![](binaries/network_policy.png)
 
 ---
 
@@ -326,22 +332,21 @@ Mettre en place des **Network Policies** peut être complexe... mais on peut fai
 
 ## It's secure
 
-Sysadmins/Devs: "It's secure because it's in a container"
+**Sysadmins/Devs:** "It's secure because it's in a container"
 
-Hackers: ![center width:350](binaries/doginplaypen.gif) [@sylvielorxu](https://twitter.com/sylvielorxu/status/1152511215941369856) 
+**Hackers:** ![center width:350](binaries/doginplaypen.gif) [@sylvielorxu](https://twitter.com/sylvielorxu/status/1152511215941369856)
 
 ---
 
-## TODO Pas de container Root !
+## Pas de container exécuté en tant que Root !
 
-![center](binaries/im_root.png)
+Kubernetes utilisent toujours la table des users ID de l'hôte
 
-Par défaut
-This means that a container's user ID table maps to the host's user table, and running a process as the root user inside a container runs it as root on the host. Although we have layered security mechanisms to prevent container breakouts, running as root inside the container is still not recommended.
+Si le binaire contenu dans l'image Docker est lancé en tant que **root** (souvent le cas), un attaquant a plus de chance de sortir du container.
 
-Many container images use the root user to run PID 1 - if that process is compromised, the attacker has root in the container, and any mis-configurations become much easier to exploit.
+[Kubecon EU 2018: The route to Rootless Containers](https://www.youtube.com/watch?v=j4GO2d3YjmE)
 
-Ca peut poser des problèmes pour certaines images Docker => talk sur tous les workaround pour se passer de containers Root https://www.youtube.com/watch?v=j4GO2d3YjmE
+![bg fit right:40%](binaries/im_root.png)
 
 ---
 
@@ -409,9 +414,15 @@ Zalando (mise à jour)
 
 <!-- _class: lead -->
 
-# Promis, demain, je sécurise
+# "Promis, demain, je sécurise"
 
-![](binaries/wrap.png)
+![center](binaries/wrap.png)
+
+---
+
+## There is a lot to Secure
+
+![center width:800](binaries/lot_to_secure.jpg)
 
 ---
 
@@ -446,3 +457,68 @@ Zalando (mise à jour)
 ## Architecture simplifiée de Kubernetes
 
 ![center width:700](binaries/kubernetes-control-plane.png)
+
+---
+
+<!-- _class: lead -->
+
+# Sources
+
+---
+
+## Les best practices
+
+* [Kubernetes.io : 11 ways not to get hacked](https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/)
+* [CNCF : Kubernetes security best practices](https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow/)
+* [Rancher : More Kubernetes best practices](https://rancher.com/blog/2019/2019-01-17-101-more-kubernetes-security-best-practices/)
+* [Stackrox](https://www.stackrox.com/post/2019/07/kubernetes-security-101/?utm_sq=g6zvjgb9og#final-thoughts-ensure-you-can-answer-these-12-questions-about-your-container-and-kubernetes-environment)
+* [Jerry Jalava : Kubernetes Security Journey](https://fr.slideshare.net/jerryjalava/kubernetes-security-journey)
+* [Workshop Sécuriser son Kubernetes au DevFest Nantes 2019](https://drive.google.com/file/d/1L5y3s8bq3yIH22S-AQnZIV9DSDFLSzKL/view)
+
+---
+
+## Les outils pour durcir Kube
+
+* [Check des best practices : Kubehunter](https://github.com/aquasecurity/kube-hunter)
+* [OnePolicyAgent](https://blog.octo.com/durcissez-votre-kube-avec-openpolicyagent/)
+* [Analyse statique : Clair](https://coreos.com/clair/docs/latest/)
+* [Analyse statique :Anchore](https://anchore.com/)
+* [IDS : Falco](https://falco.org/)
+
+---
+
+## Les failles de sécu récentes de K8s (&+)
+
+* [Faille dans RunC (Docker, Kubernetes et Mesos concernés)](https://www.lemondeinformatique.fr/actualites/lire-une-faille-dans-runc-rend-vulnerable-docker-et-kubernetes-74312.html)
+* [Liste des CVE Kubernetes](https://www.cvedetails.com/vulnerability-list/vendor_id-15867/Kubernetes.html)
+* [ZDnet : La première grosse faille de sécurité est là (API server)](https://www.zdnet.fr/actualites/kubernetes-la-premiere-grosse-faille-est-la-39877607.htm)
+* [L'exploit pour la faille dans l'API Server](https://www.twistlock.com/labs-blog/demystifying-kubernetes-cve-2018-1002105-dead-simple-exploit/)
+
+---
+
+## Les sociétés hackées dans la presse
+
+* [2018 : Cryptojacking chez Tesla](https://redlock.io/blog/cryptojacking-tesla)
+* [2019 : Cryptojacking chez jwplayer](https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205)
+* [Plus dinfos sur le cryptominer XMrig](https://news.sophos.com/fr-fr/2019/05/31/eternel-retour-cryptomineur-xmrig/)
+* [ZDNET : des hackers utilisent les API de management de Docker exposées sur le net](https://www.zdnet.com/article/a-hacking-group-is-hijacking-docker-systems-with-exposed-api-endpoints/)
+
+---
+
+## Kubernetes Security Audit (audit du code en aout 2019)
+
+* [L'article principal](https://www.cncf.io/blog/2019/08/06/open-sourcing-the-kubernetes-security-audit/)
+* [L'audit en lui même](https://github.com/kubernetes/community/blob/master/wg-security-audit/findings/Kubernetes%20Final%20Report.pdf)
+
+---
+
+## Autre
+
+* [Outil d'audit des rôles](https://github.com/Ladicle/kubectl-bindrole?utm_sq=g502s0hv29)
+* [Une liste d'outils permettant d'auditer le RBAC dans Kubernetes](https://twitter.com/learnk8s/status/1190859981811277824?s=19)
+* [Une image XMRig (Monero) sur le Dockerhub](https://unit42.paloaltonetworks.com/graboid-first-ever-cryptojacking-worm-found-in-images-on-docker-hub/)
+* [Twitter : "There is a lot to Secure in Kubernetes"](https://twitter.com/popsysdig/status/1185263894916411404?s=19)
+* [DNS Spoofing on Kubernetes Clusters](https://blog.aquasec.com/dns-spoofing-kubernetes-clusters?utm_sq=g7xa5xquzi)
+* [Docker and Kubernetes Reverse shells](https://raesene.github.io/blog/2019/08/09/docker-reverse-shells/)
+* [Exploiter un Tomcat Manager non sécurisé](https://www.hackingarticles.in/multiple-ways-to-exploit-tomcat-manager/)
+* [Backdoor dans webmin](https://pentest.com.tr/exploits/DEFCON-Webmin-1920-Unauthenticated-Remote-Command-Execution.html)
