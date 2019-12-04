@@ -63,7 +63,7 @@ Leader mondial des solutions technologiques intégrées pour les entreprises uti
 
 ## Que fait un ingénieur cloud chez Lectra ?
 
-![center width:1100](binaries/logos.png)
+![center width:1050](binaries/logos.png)
 
 ---
 
@@ -86,50 +86,18 @@ Leader mondial des solutions technologiques intégrées pour les entreprises uti
 
 ---
 
-## Mais... c'est quoi Kubernetes déjà ?
+## Mais... c'est quoi Kubernetes / Docker déjà ?
 
 ![width:700 center](./binaries/kubernetes_architecture.png)
 Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ---
 
-## La mode des containers
+## Docker et ses promesses
 
-> **Outil** qui permet d'empaqueter une application et ses dépendances. Elle pourra être exécuté sur n'importe quel serveur
-
-* Il existe de nombreuses implémentations des containers
-* ![width:200](binaries/docker.png) est très utilisé depuis quelques années 
+* ![width:200](binaries/docker.png) : techno de containerisation,  très utilisé depuis 2012
   * utilise des fonctionnalités du kernel Linux
   * fourni une interface "simple" et un magasin d'images
-
----
-
-## Ce n'est pas une machine virtuelle !
-
-<br/>
-
-![width:1000 center](binaries/Fullvirt_containers.png)
-
----
-
-## Pourquoi utiliser les containers Docker ?
-
-Pratique si on déploie souvent de "petites" applications, en cycle (très) courts
-
-L'application devient immuable
-
-* Si on veut l'upgrader ou changer sa configuration :
-  * on ne modifie pas le container (source d'erreur)
-  * on déploie la nouvelle version et on supprime l'ancienne
-
-<br/>
-
-[blog.zwindler.fr / Should we have containers ?](https://blog.zwindler.fr/2016/08/25/when-should-we-have-containers/)
-
----
-
-## Les promesses de Docker
-
 * Rend l'infra *facile* pour le Dev
 * Economies hardware (par rapport aux VMs)
 * Sécurité (isolation des applications)
@@ -143,7 +111,7 @@ L'application devient immuable
 
 ## Retour à la réalité
 
-**Techniquement** : on a réinventé les `jail` avec une interface de management "simple"
+**Techniquement** : on a réinventé les `jail` avec une interface de management "simple" et des images préconfigurées
 
 **Et on a toujours le Dev qui nous dis** : ```Sur mon poste, ça marche.```
 
@@ -197,11 +165,11 @@ Lancer nginx dans Docker vs dans Kubernetes
 
 L'histoire récente regorge de failles et d'exploits sur des interface de management ouvertes sur Internet
 
-* phpMyAdmin
+* **phpMyAdmin**
 
-* tomcat-manager
+* **tomcat-manager**
 
-* webmin
+* **webmin**
 
 * ...
 
@@ -215,7 +183,7 @@ L'histoire récente regorge de failles et d'exploits sur des interface de manage
 
 ---
 
-## "Not password protected"
+## “Not password protected”
 
 > The hackers had infiltrated Tesla’s Kubernetes console which was **not password protected** / [Source : redlock.io](https://redlock.io/blog/cryptojacking-tesla)
 
@@ -224,6 +192,7 @@ L'histoire récente regorge de failles et d'exploits sur des interface de manage
 ---
 
 ## Game over
+<br/>
 
 ![center width:300](binaries/monero_logo.png)
 
@@ -265,7 +234,7 @@ Ex. **alice** a le droit de lister les containers dans le namespace **default**,
 
 Si un compte utilisateur/application est compromis, les droits d'accès seront restreints à un périmètre donné, limité par :
 
-* namespace (subdivision du cluster)
+* **Namespace** (subdivision logique du cluster)
 * types d'actions précis pour chaque type de ressources
 
 ---
@@ -279,15 +248,15 @@ Le **principe des moindres privilèges** est un vrai chantier
 
 Pour auditer le RBAC :
 
-* kubectl auth can-i
-* kubectl who-can
+* `kubectl auth can-i`
+* `kubectl who-can`
 * [et plein d'autres](https://twitter.com/learnk8s/status/1190859981811277824?s=19)
 
 ---
 
 <!-- _class: lead -->
 
-# "C’est toujours la faute du réseau"
+# “C’est toujours la faute du réseau”
 
 ---
 
@@ -301,23 +270,25 @@ Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-m
 
 ---
 
-## Mettre des Network Policies
+## Ajouter des Network Policies
 
-Par défaut, la gestion du réseau virtuel dans Kubernetes autorise tout container à se connecter à n'importe quel autre.
+Par défaut, la gestion du réseau virtuel dans Kubernetes *autorise tout container à se connecter à n'importe quel autre*.
 
 ![](binaries/network_policy_yaml.png) ![](binaries/network_policy.png)
 
 ---
 
-## Les Networks Policies, le bon exemple
+## Les bons élèves
 
-Monzo Bank a mis en place des [Network Policies pour ses 1500 microservices](https://monzo.com/blog/we-built-network-isolation-for-1-500-services) : ![center](binaries/monzo2.png)
+**Monzo Bank** a mis en place des [Network Policies pour la totalité de ses 1500 microservices](https://monzo.com/blog/we-built-network-isolation-for-1-500-services) : ![center](binaries/monzo2.png)
 
 ---
 
-## Service Mesh ?
+## Service Mesh !
 
-Mettre en place des **Network Policies** peut être complexe... mais on peut faire encore plus complexe !
+Mettre en place des **Network Policies** peut être complexe... 
+
+... mais on peut faire encore plus complexe !
 
 ![bg right:55% fit](binaries/servicemesh.jpg)
 
@@ -378,34 +349,58 @@ Limiter l'impact d'une compromission :
 
 Des CVE sortent sur **NodeJS**, **.Net** et autre **JVM** toutes les semaines
 
-Il existe des outils d'analyse statiques des images Docker que vous utilisez sur votre cluster
+Les images de bases de vos containers sont bourrées de failles
+
+* analyse statiques des images Docker
 ![center width:400](binaries/clair-logo.png) ![center width:400](binaries/anchore.png)
 
 ---
 
-## TODO Scan temps réel
+## Concrêtement
 
-IDS
+Interface affichant les failles détectées sur chaque image
 
-Falco
+Rajouter des **quality gates** sur l'IC pour bloquer les images qui ne répondent pas aux exigences de sécurité
+
+![bg right fit](binaries/quayclair1.png)
+
+---
+
+## Scan temps réel
+
+Il existe aussi des *Intrusion Detection System* pour Kubernetes
+
+![center width:400](binaries/falco-logo.png)
+
+> Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms
+
+---
+
+## “Si je lance XMRig, qu'est ce qu'il se passe ?”
+
+![center](binaries/falco_running.png)
 
 ---
 
 <!-- _class: lead -->
 
-# Sécuriser la plateforme
+# ET l'infra dans tout ça ?
 
 ---
 
 ## TODO Les failles dans Kubernetes
 
-CVE
+* [Faille dans RunC (Docker, Kubernetes et Mesos concernés)](https://www.lemondeinformatique.fr/actualites/lire-une-faille-dans-runc-rend-vulnerable-docker-et-kubernetes-74312.html)
+* [Liste des CVE Kubernetes](https://www.cvedetails.com/vulnerability-list/vendor_id-15867/Kubernetes.html)
+* [ZDnet : La première grosse faille de sécurité est là (API server)](https://www.zdnet.fr/actualites/kubernetes-la-premiere-grosse-faille-est-la-39877607.htm)
+* [L'exploit pour la faille dans l'API Server](https://www.twistlock.com/labs-blog/demystifying-kubernetes-cve-2018-1002105-dead-simple-exploit/)
+
 
 ---
 
-## TODO Kubernetes Security Audit
+## Kubernetes Security Audit
 
-Début aout, la CNCF a sorti un kit permettant d'auditer les clusters Kubernetes et les composants gravitant autour (CoreDNS, Envoy et Prometheus lors du PoC, mais ouverts à tous les autres projets maintenant).
+Début aout, la CNCF a commandé un audit des composants de Kubernetes
 
 ---
 
@@ -414,6 +409,8 @@ Début aout, la CNCF a sorti un kit permettant d'auditer les clusters Kubernetes
 Pas forcément simple
 
 Zalando (mise à jour)
+
+[Kubecon EU 2018 - Zalando Continuously Deliver your K8s Infrastructure](https://static.sched.com/hosted_files/kccnceu18/18/2018-05-02%20Continuously%20Deliver%20your%20Kubernetes%20Infrastructure%20-%20KubeCon%202018%20Copenhagen.pdf)
 
 ---
 
@@ -463,6 +460,41 @@ Zalando (mise à jour)
 
 ---
 
+## La mode des containers
+
+> **Outil** qui permet d'empaqueter une application et ses dépendances. Elle pourra être exécuté sur n'importe quel serveur
+
+* Il existe de nombreuses implémentations des containers
+* ![width:200](binaries/docker.png) est très utilisé depuis quelques années 
+  * utilise des fonctionnalités du kernel Linux
+  * fourni une interface "simple" et un magasin d'images
+
+---
+
+## Le container, ce n'est pas une machine virtuelle !
+
+<br/>
+
+![width:1000 center](binaries/Fullvirt_containers.png)
+
+---
+
+## Pourquoi utiliser les containers Docker ?
+
+Pratique si on déploie souvent de "petites" applications, en cycle (très) courts
+
+L'application devient immuable
+
+* Si on veut l'upgrader ou changer sa configuration :
+  * on ne modifie pas le container (source d'erreur)
+  * on déploie la nouvelle version et on supprime l'ancienne
+
+<br/>
+
+[blog.zwindler.fr / Should we have containers ?](https://blog.zwindler.fr/2016/08/25/when-should-we-have-containers/)
+
+---
+
 ## Architecture simplifiée de Kubernetes
 
 ![center width:700](binaries/kubernetes-control-plane.png)
@@ -493,6 +525,7 @@ Zalando (mise à jour)
 * [Analyse statique : Clair](https://coreos.com/clair/docs/latest/)
 * [Analyse statique :Anchore](https://anchore.com/)
 * [IDS : Falco](https://falco.org/)
+* [SELinux, Seccomp, Falco, a technical discussion](https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/)
 
 ---
 
