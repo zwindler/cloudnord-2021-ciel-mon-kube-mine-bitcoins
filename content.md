@@ -101,15 +101,23 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ## Docker et ses promesses
 
+![center width:400](binaries/docker.png)
+
 * Technologie de containerisation, très utilisé depuis 2012
   * utilise des fonctionnalités du kernel Linux
-  * fourni une interface "simple" et un magasin d'images
+  * gestion via une interface "simple" 
+  * fourni un magasin d'images librement accessibles
+
+---
+
+## Docker et ses promesses
+
+![center width:400](binaries/docker.png)
+
 * Rend l'infra *facile* pour le Dev
 * Economies hardware (par rapport aux VMs)
 * Sécurité (isolation des applications)
 * Immutabilité (déploiements et mises à jours reproductibles)
-
-![center width:400](binaries/docker.png)
 
 ---
 
@@ -117,9 +125,7 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 **Techniquement** : on a réinventé les `jail` avec une interface de management "simple" et des images préconfigurées
 
-**Et on a toujours le Dev qui nous dis** : ```Sur mon poste, ça marche.```
-
-Mais surtout, on ne sait toujours pas comment gérer :
+Mais on ne sait toujours pas comment gérer :
 
 * la haute disponibilité ?
 * la tolérance de panne ?
@@ -151,7 +157,7 @@ Mais surtout, on ne sait toujours pas comment gérer :
 
 ## Par extension, c'est un outil verbeux
 
-Lancer nginx dans Docker vs dans Kubernetes
+Lancer nginx dans Docker **vs** dans Kubernetes
 ![center width:500](binaries/docker_nginx.png)
 ![center width:580](binaries/nginx-yaml.png)
 
@@ -167,7 +173,7 @@ Lancer nginx dans Docker vs dans Kubernetes
 
 ## Un outil complexe ? Pas grave, il y a une UI !
 
-L'histoire récente regorge de failles et d'exploits sur des interface de management ouvertes sur Internet
+L'histoire récente regorge de failles et d'exploits sur des interfaces de management ouvertes sur Internet
 
 * **phpMyAdmin**
 
@@ -196,6 +202,7 @@ L'histoire récente regorge de failles et d'exploits sur des interface de manage
 ---
 
 ## Game over
+
 <br/>
 
 ![center width:300](binaries/monero_logo.png)
@@ -217,16 +224,18 @@ Vraiment.
 ## Contrôle d'accès dans Kubernetes
 
 * Depuis la 1.6 (2017), RBAC (Role-based access control) par défaut
-  * Permet de créer de donner des droits fins, par type de ressource et type d'accès
+  * Donner des droits fins
+    * par type de ressource 
+    * par type d'accès
   * De les affecter à des groupes d'utilisateurs ou d'applications
 
-* Appliquez le principe de moindre privilège
+* Appliquez le **principe de moindre privilège**
 
 ---
 
 ## Le RBAC par l'exemple
 
-![width:500](binaries/role.png) ![width:500](binaries/rolebinding.png)
+&nbsp;&nbsp;&nbsp; ![width:500](binaries/role.png) &nbsp; ![width:500](binaries/rolebinding.png)
 
 Ex. **alice** a le droit de lister les containers dans le namespace **default**, mais pas de les supprimer ni les créer.
 
@@ -234,7 +243,7 @@ Ex. **alice** a le droit de lister les containers dans le namespace **default**,
 
 ## En cas de compromission
 
-Si un compte utilisateur/application est compromis, les droits d'accès seront restreints à un périmètre donné, limité par :
+Si un compte utilisateur/application est compromis, les accès de l'attaquant seront limités à un périmètre donné :
 
 * **Namespace** (subdivision logique du cluster)
 * types d'actions précis pour chaque type de ressources
@@ -282,6 +291,12 @@ Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-m
 
 > A quick Shodan search shows that show that more than 2,000 Docker engines are insecurely exposed to the Internet
 > -- [unit42 : Graboid](https://unit42.paloaltonetworks.com/graboid-first-ever-cryptojacking-worm-found-in-images-on-docker-hub/)
+
+Pas d'API de management ouvertes sur Internet !
+
+* runC
+* API server
+* etcd
 
 ---
 
