@@ -6,6 +6,12 @@ paginate: true
 ---
 
 <style>
+
+section {
+  background-color: #fff;
+  color: #333;
+}
+
 img[alt~="center"] {
   display: block;
   margin: 0 auto;
@@ -51,7 +57,7 @@ Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)
 
 Leader mondial des solutions technologiques intégrées pour les entreprises utilisatrices de cuir ou textile
 
-* ![width:550 center](./binaries/Medium-Virga-MTO-cutting-job-0050.jpg)
+![width:550 center](./binaries/Medium-Virga-MTO-cutting-job-0050.jpg)
 
 ---
 
@@ -75,7 +81,7 @@ Leader mondial des solutions technologiques intégrées pour les entreprises uti
 
 * Et plus encore
 
-* GOTO => https://www.lectra.com/fr/carrieres/europe
+* GOTO ➔ https://www.lectra.com/fr/carrieres/europe
 
 ---
 
@@ -95,15 +101,13 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ## Docker et ses promesses
 
-* ![width:200](binaries/docker.png) : techno de containerisation,  très utilisé depuis 2012
+* Technologie de containerisation, très utilisé depuis 2012
   * utilise des fonctionnalités du kernel Linux
   * fourni une interface "simple" et un magasin d'images
 * Rend l'infra *facile* pour le Dev
 * Economies hardware (par rapport aux VMs)
 * Sécurité (isolation des applications)
 * Immutabilité (déploiements et mises à jours reproductibles)
-
-<br/>
 
 ![center width:400](binaries/docker.png)
 
@@ -137,9 +141,9 @@ Mais surtout, on ne sait toujours pas comment gérer :
 
 ## C'est une outil puissant et complexe
 
-> Kubernetes définit un certain nombre d'objets qui, ensemble, fournissent des mécanismes pour déployer, maintenir et mettre à l’échelle des applications
+> Kubernetes définit un **certain** nombre d'objets qui, ensemble, fournissent des mécanismes pour déployer, maintenir et mettre à l’échelle des applications
 
-* *Node, Pod, Deployment, ReplicaSet, DaemonSet, StatefulSet, ...*
+* *Pod, Deployment, ReplicaSet, DaemonSet, StatefulSet* pour l'appli
 * *Role, RoleBinding, ClusterRoleBinding, ServiceAccount* pour la gestion des droits
 * ...
 
@@ -212,13 +216,11 @@ Vraiment.
 
 ## Contrôle d'accès dans Kubernetes
 
-* Avant, ABAC (Attribute-based access control)
-
-* Depuis la 1.6 (2017), RBAC (Role-based access control)
+* Depuis la 1.6 (2017), RBAC (Role-based access control) par défaut
   * Permet de créer de donner des droits fins, par type de ressource et type d'accès
   * De les affecter à des groupes d'utilisateurs ou d'applications
 
-* Principe de moindre privilège
+* Appliquez le principe de moindre privilège
 
 ---
 
@@ -260,6 +262,12 @@ Pour auditer le RBAC :
 
 ---
 
+## Architecture simplifiée de Kubernetes
+
+![center width:700](binaries/kubernetes_control_plane.png)
+
+---
+
 ## Du TLS partout
 
 Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-même (api-server, etcd, ...)
@@ -270,11 +278,18 @@ Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-m
 
 ---
 
+## Des APIs fermées
+
+> A quick Shodan search shows that show that more than 2,000 Docker engines are insecurely exposed to the Internet
+> -- [unit42 : Graboid](https://unit42.paloaltonetworks.com/graboid-first-ever-cryptojacking-worm-found-in-images-on-docker-hub/)
+
+---
+
 ## Ajouter des Network Policies
 
 Par défaut, la gestion du réseau virtuel dans Kubernetes *autorise tout container à se connecter à n'importe quel autre*.
 
-![](binaries/network_policy_yaml.png) ![](binaries/network_policy.png)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![](binaries/network_policy_yaml.png) &nbsp;&nbsp;&nbsp;&nbsp; ![](binaries/network_policy.png)
 
 ---
 
@@ -356,13 +371,13 @@ Les images de bases de vos containers sont bourrées de failles
 
 ---
 
-## Concrêtement
+## Concrètement
 
 Interface affichant les failles détectées sur chaque image
 
-Rajouter des **quality gates** sur l'IC pour bloquer les images qui ne répondent pas aux exigences de sécurité
+Rajouter des **quality gates** côté Intégration Continue pour bloquer les images qui ne répondent pas aux exigences de sécurité
 
-![bg right fit](binaries/quayclair1.png)
+![bg right fit](binaries/clair_scan.png)
 
 ---
 
@@ -376,51 +391,72 @@ Il existe aussi des *Intrusion Detection System* pour Kubernetes
 
 ---
 
-## “Si je lance XMRig, qu'est ce qu'il se passe ?”
+## “Pourquoi *GCC* tourne sur mon container ?”
 
-![center](binaries/falco_running.png)
+![center width:1000](binaries/falco_running.png)
+
+<br/>
+
+[JW Player : How A Cryptocurrency Miner Made Its Way onto Our Internal Kubernetes Clusters](https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205)
 
 ---
 
 <!-- _class: lead -->
 
-# ET l'infra dans tout ça ?
-
----
-
-## TODO Les failles dans Kubernetes
-
-* [Faille dans RunC (Docker, Kubernetes et Mesos concernés)](https://www.lemondeinformatique.fr/actualites/lire-une-faille-dans-runc-rend-vulnerable-docker-et-kubernetes-74312.html)
-* [Liste des CVE Kubernetes](https://www.cvedetails.com/vulnerability-list/vendor_id-15867/Kubernetes.html)
-* [ZDnet : La première grosse faille de sécurité est là (API server)](https://www.zdnet.fr/actualites/kubernetes-la-premiere-grosse-faille-est-la-39877607.htm)
-* [L'exploit pour la faille dans l'API Server](https://www.twistlock.com/labs-blog/demystifying-kubernetes-cve-2018-1002105-dead-simple-exploit/)
-
+# Et l'infra dans tout ça ?
 
 ---
 
 ## Kubernetes Security Audit
 
-Début aout, la CNCF a commandé un audit des composants de Kubernetes
+Comme tout logiciel, Kubernetes a des failles !
+
+Début aout, la CNCF a commandé un audit du code de Kubernetes
+
+* Commencé sur un périmètre restreint
+* A permis de déceler 37 vulnérabilités
+* Généralisé à tous les nouveaux composants entrant dans la CNCF
 
 ---
 
-## TODO Moralité : mettez à jour régulièrement !
+## D'autres failles dans Kubernetes
 
-Pas forcément simple
+Deux autres grosses CVE sont sorties récemment
 
-Zalando (mise à jour)
-
-[Kubecon EU 2018 - Zalando Continuously Deliver your K8s Infrastructure](https://static.sched.com/hosted_files/kccnceu18/18/2018-05-02%20Continuously%20Deliver%20your%20Kubernetes%20Infrastructure%20-%20KubeCon%202018%20Copenhagen.pdf)
+* 2018 / faille dans l'API server
+  * [ZDnet : La première grosse faille de sécurité est là (API server)](https://www.zdnet.fr/actualites/kubernetes-la-premiere-grosse-faille-est-la-39877607.htm)
+* 2019 / faille dans RunC pour sortir du container
+  * [Faille dans RunC (Docker, Kubernetes et Mesos concernés)](https://www.lemondeinformatique.fr/actualites/lire-une-faille-dans-runc-rend-vulnerable-docker-et-kubernetes-74312.html)
 
 ---
 
-## TODO Mise à jour Zalando
+## Moralité : mettez à jour régulièrement !
+
+![center width:400](binaries/captainobvious.gif)
+
+... en vrai, c'est pas forcément simple
+
+---
+
+## Dans un monde parfait (et simpliste)
+
+![center](binaries/kubernetes_upgrade_policy.png)
+
+---
+
+## Avec un cluster k8s stateful multizone ?
+
+Zalando a des clusters avec des données... qui ne veulent pas migrer !
+
+![center width:580](binaries/zalando.png)
+
+[Kubecon EU 2018 - Zalando Continuously Deliver your K8s Infra](https://static.sched.com/hosted_files/kccnceu18/18/2018-05-02%20Continuously%20Deliver%20your%20Kubernetes%20Infrastructure%20-%20KubeCon%202018%20Copenhagen.pdf)
 
 --- 
 
 <!-- _class: lead -->
 
-# "Promis, demain, je sécurise"
+# “Promis, demain, je sécurise”
 
 ![center](binaries/wrap.png)
 
@@ -435,10 +471,14 @@ Zalando (mise à jour)
 ## Conclusion
 
 * Ne faites pas du Kubernetes si vous n'en avez pas besoin !
+  * Mais si vous pouvez le faire, faites le !
   * [blog : combien de problèmes ces stacks ont générés ?](https://blog.zwindler.fr/2019/09/03/concerning-kubernetes-combien-de-problemes-ces-stacks-ont-generes/)
-<br/>
 
-* Il y a beaucoup de choses à sécuriser dans Kube, et pas que de l'infra. Sécurisez dès le début et formez vos Dev !
+* Il y a beaucoup de choses à sécuriser dans Kube
+
+* Formez vos Dev !
+
+* Sécurisez dès le début
 
 ---
 
@@ -495,12 +535,6 @@ L'application devient immuable
 
 ---
 
-## Architecture simplifiée de Kubernetes
-
-![center width:700](binaries/kubernetes-control-plane.png)
-
----
-
 <!-- _class: lead -->
 
 # Sources
@@ -542,7 +576,7 @@ L'application devient immuable
 
 * [2018 : Cryptojacking chez Tesla](https://redlock.io/blog/cryptojacking-tesla)
 * [2019 : Cryptojacking chez jwplayer](https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205)
-* [Plus dinfos sur le cryptominer XMrig](https://news.sophos.com/fr-fr/2019/05/31/eternel-retour-cryptomineur-xmrig/)
+* [Plus d'infos sur le cryptominer XMrig](https://news.sophos.com/fr-fr/2019/05/31/eternel-retour-cryptomineur-xmrig/)
 * [ZDNET : des hackers utilisent les API de management de Docker exposées sur le net](https://www.zdnet.com/article/a-hacking-group-is-hijacking-docker-systems-with-exposed-api-endpoints/)
 
 ---
