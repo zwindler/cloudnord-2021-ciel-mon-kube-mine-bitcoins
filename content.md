@@ -103,9 +103,10 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ![center width:400](binaries/docker.png)
 
-* Technologie de containerisation, très utilisé depuis 2012
+* Technologie de containerisation
+  * très utilisé depuis 2012
   * utilise des fonctionnalités du kernel Linux
-  * gestion via une interface "simple" 
+  * gestion via une interface "simple"
   * fourni un magasin d'images librement accessibles
 
 ---
@@ -157,9 +158,10 @@ Mais on ne sait toujours pas comment gérer :
 
 ## Par extension, c'est un outil verbeux
 
-Lancer nginx dans Docker **vs** dans Kubernetes
-![center width:500](binaries/docker_nginx.png)
-![center width:580](binaries/nginx-yaml.png)
+Lancer nginx dans **Docker**
+![center width:450](binaries/docker_nginx.png)
+Versus dans **Kubernetes**
+![center width:540](binaries/nginx-yaml.png)
 
 ---
 
@@ -255,7 +257,7 @@ Si un compte utilisateur/application est compromis, les accès de l'attaquant se
 Le **principe des moindres privilèges** est un vrai chantier
 
 * à mettre en place dès le début du cycle de développement
-* difficile à appliquer *a posteriori* (sauf à tout bloquer)
+* plus difficile à appliquer *a posteriori* (sauf à tout bloquer)
 
 Pour auditer le RBAC :
 
@@ -292,7 +294,7 @@ Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-m
 > A quick Shodan search shows that show that more than 2,000 Docker engines are insecurely exposed to the Internet
 > -- [unit42 : Graboid](https://unit42.paloaltonetworks.com/graboid-first-ever-cryptojacking-worm-found-in-images-on-docker-hub/)
 
-Pas d'API de management ouvertes sur Internet !
+Pas d'API ouvertes sur Internet !
 
 * runC
 * API server
@@ -390,7 +392,7 @@ Les images de bases de vos containers sont bourrées de failles
 
 Interface affichant les failles détectées sur chaque image
 
-Rajouter des **quality gates** côté Intégration Continue pour bloquer les images qui ne répondent pas aux exigences de sécurité
+Rajouter des **quality gates** côté *Intégration Continue* pour bloquer les images qui ne répondent pas aux exigences de sécurité
 
 ![bg right fit](binaries/clair_scan.png)
 
@@ -485,13 +487,13 @@ Zalando a des clusters avec des données... qui ne veulent pas migrer !
 
 ## Conclusion
 
-* Ne faites pas du Kubernetes si vous n'en avez pas besoin !
+* Ne déployez pas Kubernetes si vous n'en avez pas besoin !
   * Mais si vous pouvez le faire, faites le !
   * [blog : combien de problèmes ces stacks ont générés ?](https://blog.zwindler.fr/2019/09/03/concerning-kubernetes-combien-de-problemes-ces-stacks-ont-generes/)
 
 * Il y a beaucoup de choses à sécuriser dans Kube
 
-* Formez vos Dev !
+* Formez vos Dev, pas seulement les Ops !
 
 * Sécurisez dès le début
 
@@ -596,7 +598,9 @@ L'application devient immuable
 
 ---
 
-## Kubernetes Security Audit (audit du code en aout 2019)
+## Kubernetes Security Audit 
+
+### Audit du code en aout 2019
 
 * [L'article principal](https://www.cncf.io/blog/2019/08/06/open-sourcing-the-kubernetes-security-audit/)
 * [L'audit en lui même](https://github.com/kubernetes/community/blob/master/wg-security-audit/findings/Kubernetes%20Final%20Report.pdf)
