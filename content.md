@@ -8,7 +8,7 @@ paginate: true
 <style>
 
 section {
-  background-color: #fff;
+  background-color: #fefefe;
   color: #333;
 }
 
@@ -32,6 +32,7 @@ blockquote:after{
 
 <!-- _class: lead -->
 
+
 # Ciel ! Mon Kubernetes mine des 
 # ![width:60](binaries/Bitcoin.svg.png) Bitcoins ![width:60](binaries/Bitcoin.svg.png)
 
@@ -53,7 +54,7 @@ Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)
 
 ---
 
-## Lectra
+## ![height:50](binaries/lectra.png)
 
 Leader mondial des solutions technologiques intégrées pour les entreprises utilisatrices de cuir ou textile
 
@@ -61,13 +62,7 @@ Leader mondial des solutions technologiques intégrées pour les entreprises uti
 
 ---
 
-## Que fait un ingénieur cloud chez Lectra ?
-
-![width:450 center](./binaries/there_is_no_cloud.png)
-
----
-
-## Que fait un ingénieur cloud chez Lectra ?
+## Que fait un ingénieur cloud chez ![height:40](binaries/lectra.png) ?
 
 ![center width:1050](binaries/logos.png)
 
