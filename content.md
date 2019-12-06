@@ -116,9 +116,7 @@ Technologie de containerisation d'applications
 * Rend l'infra *facile* pour le Dev
 * Economies hardware (par rapport aux VMs)
 * Sécurité (isolation des applications)
-* Immutabilité (déploiements et mises à jours reproductibles)
-
-![center width:400](binaries/shut-up-and-take-my-money.jpg)
+* Immutabilité (déploiements et mises à jours reproductibles) ![center width:400](binaries/shut-up-and-take-my-money.jpg)
 
 ---
 
@@ -146,7 +144,7 @@ Mais on ne sait toujours pas comment gérer :
 
 ---
 
-## C'est une outil puissant et complexe
+## C'est un outil puissant et complexe
 
 > Kubernetes définit un **certain** nombre d'objets qui, ensemble, fournissent des mécanismes pour déployer, maintenir et mettre à l’échelle des applications
 
