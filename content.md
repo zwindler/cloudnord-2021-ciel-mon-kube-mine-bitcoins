@@ -40,17 +40,21 @@ blockquote:after{
 
 ## ~# whoami
 
-<br/>
-
 Denis GERMAIN
 
 Ingénieur Cloud chez ![height:30](binaries/lectra.png)
 
-Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)
+Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)*
+
+![width:50](binaries/twitter.png) @zwindler / @zwindler_rflx
 
 **#geek** **#SF** **#courseAPied**
 
 ![bg fit right:40%](binaries/denis.png)
+
+<br/>
+
+**Les slides de ce talk sont sur le blog*
 
 ---
 
@@ -94,26 +98,27 @@ Crédits : [Dmitriy Paunin](https://habr.com/en/post/321810/)
 
 ---
 
-## Docker et ses promesses
+## Les containers Docker
+
+Technologie de containerisation d'applications
+
+* sortie en 2013
+* utilise des fonctionnalités du kernel Linux
+* gestion via une interface "simple"
+* fourni un magasin d'images librement accessibles
 
 ![center width:400](binaries/docker.png)
-
-* Technologie de containerisation
-  * très utilisé depuis 2012
-  * utilise des fonctionnalités du kernel Linux
-  * gestion via une interface "simple"
-  * fourni un magasin d'images librement accessibles
 
 ---
 
 ## Docker et ses promesses
 
-![center width:400](binaries/docker.png)
-
 * Rend l'infra *facile* pour le Dev
 * Economies hardware (par rapport aux VMs)
 * Sécurité (isolation des applications)
 * Immutabilité (déploiements et mises à jours reproductibles)
+
+![center width:400](binaries/shut-up-and-take-my-money.jpg)
 
 ---
 
@@ -291,9 +296,9 @@ Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-m
 
 Pas d'API ouvertes sur Internet !
 
-* runC
-* API server
-* etcd
+* Docker API
+* Kubernetes API server
+* **etcd**
 
 ---
 
@@ -379,7 +384,7 @@ Des CVE sortent sur **NodeJS**, **.Net** et autre **JVM** toutes les semaines
 Les images de bases de vos containers sont bourrées de failles
 
 * analyse statiques des images Docker
-![center width:400](binaries/clair-logo.png) ![center width:400](binaries/anchore.png)
+![center width:380](binaries/clair-logo.png) ![center width:380](binaries/anchore.png)
 
 ---
 
@@ -444,23 +449,9 @@ Deux autres grosses CVE sont sorties récemment
 
 ## Moralité : mettez à jour régulièrement !
 
-![center width:400](binaries/captainobvious.gif)
+![center width:300](binaries/captainobvious.gif)
 
 ... en vrai, c'est pas forcément simple
-
----
-
-## Dans un monde parfait (et simpliste)
-
-![center](binaries/kubernetes_upgrade_policy.png)
-
----
-
-## Avec un cluster k8s stateful multizone ?
-
-Zalando a des clusters avec des données... qui ne veulent pas migrer !
-
-![center width:580](binaries/zalando.png)
 
 [Kubecon EU 2018 - Zalando Continuously Deliver your K8s Infra](https://static.sched.com/hosted_files/kccnceu18/18/2018-05-02%20Continuously%20Deliver%20your%20Kubernetes%20Infrastructure%20-%20KubeCon%202018%20Copenhagen.pdf)
 
@@ -544,6 +535,20 @@ L'application devient immuable
 <br/>
 
 [blog.zwindler.fr / Should we have containers ?](https://blog.zwindler.fr/2016/08/25/when-should-we-have-containers/)
+
+---
+
+## Dans un monde parfait (et simpliste)
+
+![center](binaries/kubernetes_upgrade_policy.png)
+
+---
+
+## Avec un cluster k8s stateful multizone ?
+
+Zalando a des clusters avec des données... qui ne veulent pas migrer !
+
+![center width:580](binaries/zalando.png)
 
 ---
 
