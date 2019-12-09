@@ -113,10 +113,12 @@ Technologie de containerisation d'applications
 
 ## Docker et ses promesses
 
-* Rend l'infra *facile* pour le Dev
-* Economies hardware (par rapport aux VMs)
+* Rend l'infra *facile* pour le développeur
+* Economies (par rapport aux VMs)
 * Sécurité (isolation des applications)
-* Immutabilité (déploiements et mises à jours reproductibles) ![center width:400](binaries/shut-up-and-take-my-money.jpg)
+* Immutabilité (déploiements et mises à jours reproductibles) 
+
+![bg right:40% fit](binaries/shut-up-and-take-my-money.jpg)
 
 ---
 
@@ -126,9 +128,9 @@ Technologie de containerisation d'applications
 
 Mais on ne sait toujours pas comment gérer :
 
-* la haute disponibilité ?
-* la tolérance de panne ?
-* les droits d'accès ?
+* **la haute disponibilité ?**
+* **la tolérance de panne ?**
+* **les droits d'accès ?**
 
 ---
 
@@ -160,6 +162,14 @@ Lancer nginx dans **Docker**
 ![center width:450](binaries/docker_nginx.png)
 Versus dans **Kubernetes**
 ![center width:540](binaries/nginx-yaml.png)
+
+---
+
+## Abstraire l'infrastructure
+
+Décrire l'état souhaité de notre application hautement disponible
+
+![center](binaries/kubernetes_concepts.png)
 
 ---
 
@@ -308,19 +318,9 @@ Par défaut, la gestion du réseau virtuel dans Kubernetes *autorise tout contai
 
 ---
 
-## Les bons élèves
+## Les bons élèves des Network Policies
 
 **Monzo Bank** a mis en place des [Network Policies pour la totalité de ses 1500 microservices](https://monzo.com/blog/we-built-network-isolation-for-1-500-services) : ![center](binaries/monzo2.png)
-
----
-
-## Service Mesh !
-
-Mettre en place des **Network Policies** peut être complexe... 
-
-... mais on peut faire encore plus complexe !
-
-![bg right:55% fit](binaries/servicemesh.jpg)
 
 ---
 
@@ -426,11 +426,11 @@ Il existe aussi des *Intrusion Detection System* pour Kubernetes
 
 Comme tout logiciel, Kubernetes a des failles !
 
-Début aout, la CNCF a commandé un audit du code de Kubernetes
+Aout 2019 : la CNCF a commandé un audit du code de Kubernetes
 
 * Commencé sur un périmètre restreint
-* A permis de déceler 37 vulnérabilités
 * Généralisé à tous les nouveaux composants entrant dans la CNCF
+* A permis de déceler 37 vulnérabilités
 
 ---
 
@@ -438,9 +438,9 @@ Début aout, la CNCF a commandé un audit du code de Kubernetes
 
 Deux autres grosses CVE sont sorties récemment
 
-* 2018 / faille dans l'API server
+* **2018** / faille dans l'API server
   * [ZDnet : La première grosse faille de sécurité est là (API server)](https://www.zdnet.fr/actualites/kubernetes-la-premiere-grosse-faille-est-la-39877607.htm)
-* 2019 / faille dans RunC pour sortir du container
+* **2019** / faille dans RunC pour sortir du container
   * [Faille dans RunC (Docker, Kubernetes et Mesos concernés)](https://www.lemondeinformatique.fr/actualites/lire-une-faille-dans-runc-rend-vulnerable-docker-et-kubernetes-74312.html)
 
 ---
@@ -463,9 +463,11 @@ Deux autres grosses CVE sont sorties récemment
 
 ---
 
-## There is a lot to Secure
+## There is a lot to Secure 
 
-![center width:800](binaries/lot_to_secure.jpg)
+![center width:750](binaries/lot_to_secure.jpg)
+
+[Source: Kubernetes Security / Duffie Cooley](https://github.com/mauilion/vegas-meetup-2019/blob/master/k8s_security.pdf)
 
 ---
 
@@ -475,11 +477,11 @@ Deux autres grosses CVE sont sorties récemment
   * Mais si vous pouvez le faire, faites le !
   * [blog : combien de problèmes ces stacks ont générés ?](https://blog.zwindler.fr/2019/09/03/concerning-kubernetes-combien-de-problemes-ces-stacks-ont-generes/)
 
+<br/>
+
 * Il y a beaucoup de choses à sécuriser dans Kube
-
-* Formez vos Dev, pas seulement les Ops !
-
-* Sécurisez dès le début
+  * Formez vos développeurs, pas seulement les Ops !
+  * Sécurisez dès le début
 
 ---
 
@@ -512,7 +514,7 @@ Deux autres grosses CVE sont sorties récemment
 
 ---
 
-## Le container, ce n'est pas une machine virtuelle !
+## Le container, ce n'est pas une VM !
 
 <br/>
 
@@ -536,7 +538,17 @@ L'application devient immuable
 
 ---
 
-## Dans un monde parfait (et simpliste)
+## Service Mesh !
+
+Mettre en place des **Network Policies** peut être complexe... 
+
+... mais on peut faire encore plus complexe !
+
+![bg right:55% fit](binaries/servicemesh.jpg)
+
+---
+
+## Mise à jour, le monde parfait (et simpliste)
 
 ![center](binaries/kubernetes_upgrade_policy.png)
 
@@ -564,6 +576,7 @@ Zalando a des clusters avec des données... qui ne veulent pas migrer !
 * [Stackrox](https://www.stackrox.com/post/2019/07/kubernetes-security-101/?utm_sq=g6zvjgb9og#final-thoughts-ensure-you-can-answer-these-12-questions-about-your-container-and-kubernetes-environment)
 * [Jerry Jalava : Kubernetes Security Journey](https://fr.slideshare.net/jerryjalava/kubernetes-security-journey)
 * [Workshop Sécuriser son Kubernetes au DevFest Nantes 2019](https://drive.google.com/file/d/1L5y3s8bq3yIH22S-AQnZIV9DSDFLSzKL/view)
+* [Duffie Cooley (VMware) : Kubernetes Security](https://github.com/mauilion/vegas-meetup-2019/blob/master/k8s_security.pdf)
 
 ---
 
@@ -598,10 +611,8 @@ Zalando a des clusters avec des données... qui ne veulent pas migrer !
 
 ## Kubernetes Security Audit 
 
-### Audit du code en aout 2019
-
-* [L'article principal](https://www.cncf.io/blog/2019/08/06/open-sourcing-the-kubernetes-security-audit/)
-* [L'audit en lui même](https://github.com/kubernetes/community/blob/master/wg-security-audit/findings/Kubernetes%20Final%20Report.pdf)
+* [Audit du code en aout 2019 : article principal](https://www.cncf.io/blog/2019/08/06/open-sourcing-the-kubernetes-security-audit/)
+* [Audit du code en aout 2019 : audit en lui même](https://github.com/kubernetes/community/blob/master/wg-security-audit/findings/Kubernetes%20Final%20Report.pdf)
 
 ---
 
