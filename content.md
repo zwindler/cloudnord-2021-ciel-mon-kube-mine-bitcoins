@@ -86,8 +86,8 @@ Leader mondial des solutions technologiques intégrées pour les entreprises uti
 
 <!-- _class: lead -->
 
-# Ciel ! Mon Kubernetes mine des 
-# ![width:60](binaries/Bitcoin.svg.png) Bitcoins ![width:60](binaries/Bitcoin.svg.png)
+# Ciel ! Mon Kubernetes mine des
+# ~~Bitcoins~~ ![width:60](binaries/monero_logo.png) Monero ![width:60](binaries/monero_logo.png)
 
 ---
 
@@ -297,16 +297,13 @@ Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-m
 
 ---
 
-## Des APIs fermées
+## Pas d'APIs sur Internet !
 
-> A quick Shodan search shows that show that more than 2,000 Docker engines are insecurely exposed to the Internet
-> -- [unit42 : Graboid](https://unit42.paloaltonetworks.com/graboid-first-ever-cryptojacking-worm-found-in-images-on-docker-hub/)
+> 2000 Docker engines are insecurely exposed to the Internet [unit42 : Docker API + Graboid](https://unit42.paloaltonetworks.com/graboid-first-ever-cryptojacking-worm-found-in-images-on-docker-hub/)
 
-Pas d'API ouvertes sur Internet !
+> [...] but it was possible to connect from….the Internet [4armed : etcd + Digital Ocean](https://www.4armed.com/blog/hacking-digitalocean-kubernetes/)
 
-* Docker API
-* Kubernetes API server
-* **etcd**
+> our coworker’s server was also publicly exposing the kubelet ports [Handy + kubelet](https://medium.com/handy-tech/analysis-of-a-kubernetes-hack-backdooring-through-kubelet-823be5c3d67c)
 
 ---
 
@@ -350,6 +347,19 @@ Si le binaire contenu dans l'image Docker est lancé en tant que **root** (souve
 
 ---
 
+## JW Player
+
+Un des services de supervision (Weave Scope) avait été créé avec des privilèges et accessible depuis le net
+
+> Our deployment was missing the annotation to make the load balancer internal
+> The `weave-scope` container is running with the `--privileged` flag
+> Files on the root file system were mounted onto the container
+> Containers are run as the `root` user.
+
+[How A Cryptominer Made Its Way in our k8s Clusters](https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205)
+
+---
+
 ## Pod Security Policy
 
 Kubernetes permet l'ajout de politiques de conformités, notamment dans le but d'imposer des règles pour les Pods
@@ -361,17 +371,6 @@ runAsUser:
   # Require the container to run without root privileges.
   rule: 'MustRunAsNonRoot'
 ```
-
----
-
-## Réduire la surface d'attaque
-
-Limiter l'impact d'une compromission :
-
-* Le moins de dépendances possibles
-* Ne pas ajouter des binaires utiles aux attaquants
-  * oubliez `ping`, `traceroute`, `gcc`, ...
-* Multistage build (images build vs images run)
 
 ---
 
@@ -396,6 +395,17 @@ Rajouter des **quality gates** côté *Intégration Continue* pour bloquer les i
 
 ---
 
+## Réduire la surface d'attaque
+
+Limiter l'impact d'une compromission :
+
+* Le moins de dépendances possibles
+* Ne pas ajouter des binaires utiles aux attaquants
+  * oubliez `ping`, `traceroute`, `gcc`, ...
+* Multistage build (images build vs images run)
+
+---
+
 ## Scan temps réel
 
 Il existe aussi des *Intrusion Detection System* pour Kubernetes
@@ -409,10 +419,6 @@ Il existe aussi des *Intrusion Detection System* pour Kubernetes
 ## “Pourquoi *GCC* tourne sur mon container ?”
 
 ![center width:1000](binaries/falco_running.png)
-
-<br/>
-
-[JW Player : How A Cryptocurrency Miner Made Its Way onto Our Internal Kubernetes Clusters](https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205)
 
 ---
 
@@ -606,6 +612,8 @@ Zalando a des clusters avec des données... qui ne veulent pas migrer !
 * [2019 : Cryptojacking chez jwplayer](https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205)
 * [Plus d'infos sur le cryptominer XMrig](https://news.sophos.com/fr-fr/2019/05/31/eternel-retour-cryptomineur-xmrig/)
 * [ZDNET : des hackers utilisent les API de management de Docker exposées sur le net](https://www.zdnet.com/article/a-hacking-group-is-hijacking-docker-systems-with-exposed-api-endpoints/)
+* [4armed : Server-Side Request Forgery + **etcd** accessible depuis Internet chez Digital Ocean](https://www.4armed.com/blog/hacking-digitalocean-kubernetes/)
+* [Un cluster perso d'un employé de Handy laisse son kubelet ouvert sur Internet](https://medium.com/handy-tech/analysis-of-a-kubernetes-hack-backdooring-through-kubelet-823be5c3d67c)
 
 ---
 
