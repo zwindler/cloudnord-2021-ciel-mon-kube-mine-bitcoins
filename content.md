@@ -211,14 +211,6 @@ L'histoire récente regorge de failles et d'exploits sur des interfaces de manag
 
 ---
 
-## Game over
-
-<br/>
-
-![center width:300](binaries/monero_logo.png)
-
----
-
 ## Moralité : n'exposez pas la console
 
 Vraiment.
