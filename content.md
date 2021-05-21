@@ -38,11 +38,11 @@ blockquote:after{
 
 ---
 
-## ~# whoami
+## ~$ whoami
 
 Denis GERMAIN
 
-Ingénieur Cloud chez ![height:30](binaries/lectra.png)
+Senior SRE chez ![height:40](binaries/deezer-logo.png)
 
 Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)*
 
@@ -58,29 +58,27 @@ Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)*
 
 ---
 
-## ![height:50](binaries/lectra.png)
+## ![height:50](binaries/deezer-logo.png)
 
-Leader mondial des solutions technologiques intégrées pour les entreprises utilisatrices de cuir ou textile
-
-![width:550 center](./binaries/Medium-Virga-MTO-cutting-job-0050.jpg)
+Plateforme française de distribution de musique numérique
 
 ---
 
-## Que fait un ingénieur cloud chez ![height:40](binaries/lectra.png) ?
+## Que fait un ingénieur cloud chez ![height:50](binaries/deezer-logo.png) ?
 
-![center width:1050](binaries/logos.png)
+![center width:1050](binaries/.png)
 
 ---
 
 ## D’ailleurs… je cherche des collègues !
 
-* Un·e OPS pour créer des clusters dans le cloud 👩‍💻 👨‍💻
+* Un·e [Network Engineer SRE](https://jobs.smartrecruiters.com/Deezer/743999743977866-network-engineer-sre) pour connecter tout ce binioù 👩‍💻 👨‍💻
 
-* Et des Devs pour les ~~casser~~ faire scaler 🤣
+* Et des Devs pour ~~casser~~ faire scaler les environnements 🤣
 
 * Et plus encore
 
-* GOTO ➔ https://www.lectra.com/fr/carrieres/europe
+* GOTO ➔ [deezerjobs](https://www.deezerjobs.com/fr/jobs-2/engineering/) (ou demandez moi, je suis gentil)
 
 ---
 
@@ -113,7 +111,7 @@ Technologie de containerisation d'applications
 
 ## Docker et ses promesses
 
-* Rend l'infra *facile* pour le développeur
+* Rend l'infrastructure *facile* pour le développeur
 * Economies (par rapport aux VMs)
 * Sécurité (isolation des applications)
 * Immutabilité (déploiements et mises à jours reproductibles) 
@@ -124,7 +122,7 @@ Technologie de containerisation d'applications
 
 ## Retour à la réalité
 
-**Techniquement** : on a réinventé les `jail` avec une interface de management "simple" et des images préconfigurées
+**Techniquement** : on a réinventé les `jail` avec une interface de management "simple" et des (très) gros binaires préconfigurées
 
 Mais on ne sait toujours pas comment gérer :
 
@@ -148,7 +146,7 @@ Mais on ne sait toujours pas comment gérer :
 
 ## C'est un outil puissant et complexe
 
-> Kubernetes définit un **certain** nombre d'objets qui, ensemble, fournissent des mécanismes pour déployer, maintenir et mettre à l’échelle des applications
+> Kubernetes définit un **certain** nombre d'objets pilotables par API, qui ensemble fournissent des mécanismes pour déployer, maintenir et mettre à l’échelle des applications
 
 * *Pod, Deployment, ReplicaSet, DaemonSet, StatefulSet* pour l'appli
 * *Role, RoleBinding, ClusterRoleBinding, ServiceAccount* pour la gestion des droits
@@ -211,15 +209,28 @@ L'histoire récente regorge de failles et d'exploits sur des interfaces de manag
 
 ---
 
-## Moralité : n'exposez pas la console
+## Moralité : n'exposez pas la console sur Internet
 
 Vraiment.
 
-**N'exposez pas la console. Ne la déployez même pas.**
+**N'exposez pas la console. Si vous ne l'utilisez pas, ne la déployez même pas.**
 
-* Vue incomplète de votre cluster et de votre métrologie
-* Préférez lui `kubectl`, **Grafana**, **Prometheus** ou des outils de supervision tiers
+* Vue incomplète de votre cluster et de votre métrologie (moins vrai aujourd'hui)
+* Préférez lui `kubectl`, des UIs locales, **Grafana**, **Prometheus** ou des outils de supervision tiers
 * Les clouds providers la désactivent par défaut
+
+---
+
+## Utilisez une authentification tierce
+
+Pas de gestion des (vrais) utilisateurs. Les applications/démons ont des **ServiceAccounts** authentifiés par :
+
+* Tokens JWT
+* Certificats (pas révocables)
+
+Ajouter une authentification tierce de type OIDC + RBAC
+
+![width:400 center](binaries/dex-horizontal-color.png)
 
 ---
 
@@ -254,9 +265,9 @@ Si un compte utilisateur/application est compromis, les accès de l'attaquant se
 
 ## Dans la pratique
 
-Le **principe des moindres privilèges** est un vrai chantier
+Le principe des moindres privilèges est un vrai chantier
 
-* à mettre en place dès le début du cycle de développement
+* **à mettre en place dès le début** du cycle de développement
 * plus difficile à appliquer *a posteriori* (sauf à tout bloquer)
 
 Pour auditer le RBAC :
@@ -313,6 +324,25 @@ Par défaut, la gestion du réseau virtuel dans Kubernetes *autorise tout contai
 
 ---
 
+## Service Mesh !
+
+Mettre en place des **Network Policies** peut être complexe... 
+
+... mais on peut faire encore plus complexe !
+
+![bg right:55% fit](binaries/servicemesh.jpg)
+
+---
+
+## Service Mesh
+
+Au delà de la gestion du trafic (monitoring, load balancing, A/B, ...), on peut déléguer beaucoup d'aspects réseau / sécurité à un Service Mesh :
+* gestion TLS
+* firewalling / ACL
+* analyse temps réel des attaques (audit/forensics, DDOS mitigation)
+
+---
+
 <!-- _class: lead -->
 
 # Sécuriser les containers
@@ -331,7 +361,7 @@ Par défaut, la gestion du réseau virtuel dans Kubernetes *autorise tout contai
 
 Kubernetes utilise (pour l'instant) la table des users ID de l'hôte
 
-Si le binaire contenu dans l'image Docker est lancé en tant que **root** (souvent le cas), un attaquant a plus de chance de sortir du container.
+binaire lancé en tant que **root** = binaire lancé en root sur l'hôte k8s
 
 [Kubecon EU 2018: The route to Rootless Containers](https://www.youtube.com/watch?v=j4GO2d3YjmE)
 
@@ -366,14 +396,24 @@ runAsUser:
 
 ---
 
-## Scan statique des images
+## ~~Pod Security Policy~~ DEPRECATED
+
+Dépréciées depuis Kubernetes 1.21, à remplacer par OPA (Open Policy Agent)
+
+![height:300 center](binaries/gatekeeper_v3.webp)
+
+[Vos politiques de conformité sur Kubernetes avec OPA et Gatekeeper](https://blog.zwindler.fr/2020/07/20/vos-politiques-de-conformite-sur-kubernetes-avec-opa-et-gatekeeper/)
+
+---
+
+## static scan
 
 Des CVE sortent sur **NodeJS**, **.Net** et autre **JVM** toutes les semaines
 
 Les images de bases de vos containers sont bourrées de failles
 
-* analyse statiques des images Docker
-![center width:380](binaries/clair-logo.png) ![center width:380](binaries/anchore.png)
+![width:380](binaries/clair-logo.png) ![width:380](binaries/anchore.png) ![height:200
+](binaries/trivy.svg) ...
 
 ---
 
@@ -395,22 +435,38 @@ Limiter l'impact d'une compromission :
 * Ne pas ajouter des binaires utiles aux attaquants
   * oubliez `ping`, `traceroute`, `gcc`, ...
 * Multistage build (images build vs images run)
+* **Pas de shell !**
 
 ---
 
-## Scan temps réel
+## Vérifiez que vos applications
+
+* [kubeaudit](https://github.com/Shopify/kubeaudit) (audit des app déployées)
+* [kube-scan](https://github.com/octarinesec/kube-scan) (risk assessment du type CVSS)
+
+![center width:800](binaries/kube-scan.webp)
+
+---
+
+## runtime scan
 
 Il existe aussi des *Intrusion Detection System* pour Kubernetes
 
-![center width:400](binaries/falco-logo.png)
+![width:300](binaries/eBPF.png) ![width:300](binaries/falco-logo.png) ![width:300](binaries/cilium.png)
 
 > Falco is an open source project for intrusion and abnormality detection for Cloud Native platforms
+
+> Cilium: eBPF-based Networking, Observability, and Security
 
 ---
 
 ## “Pourquoi *GCC* tourne sur mon container ?”
 
+Utilise des programmes BPF côté kernel pour détecter des comportements anormaux
+
 ![center width:1000](binaries/falco_running.png)
+
+[Cilium Uncovering a Sophisticated Kubernetes Attack in Real-Time](https://www.youtube.com/watch?v=bohnofE_dvw)
 
 ---
 
@@ -440,6 +496,8 @@ Deux autres grosses CVE sont sorties récemment
   * [ZDnet : La première grosse faille de sécurité est là (API server)](https://www.zdnet.fr/actualites/kubernetes-la-premiere-grosse-faille-est-la-39877607.htm)
 * **2019** / faille dans RunC pour sortir du container
   * [Faille dans RunC (Docker, Kubernetes et Mesos concernés)](https://www.lemondeinformatique.fr/actualites/lire-une-faille-dans-runc-rend-vulnerable-docker-et-kubernetes-74312.html)
+* **2020** / faille dans kubernetes controller manager
+  * [When it’s not only about a Kubernetes CVE…](https://medium.com/@BreizhZeroDayHunters/when-its-not-only-about-a-kubernetes-cve-8f6b448eafa8)
 
 ---
 
@@ -450,6 +508,17 @@ Deux autres grosses CVE sont sorties récemment
 ... en vrai, c'est pas forcément simple
 
 [Kubecon EU 2018 - Zalando Continuously Deliver your K8s Infra](https://static.sched.com/hosted_files/kccnceu18/18/2018-05-02%20Continuously%20Deliver%20your%20Kubernetes%20Infrastructure%20-%20KubeCon%202018%20Copenhagen.pdf)
+
+---
+
+## Vérifiez AUSSI que votre cluster respecte les bonnes pratiques
+
+* [kube-hunter](https://github.com/aquasecurity/kube-hunter) (scan de vulnérabilité triviales) 
+* [kube-bench](https://github.com/aquasecurity/kube-bench) (benchmark CSI de votre installation)
+
+![center height:250](binaries/kube-bench-output.png)
+
+[Exemple d'attaque via Unauthenticated Kubelet](https://www.cyberark.com/resources/threat-research-blog/using-kubelet-client-to-attack-the-kubernetes-cluster)
 
 --- 
 
@@ -501,6 +570,14 @@ Deux autres grosses CVE sont sorties récemment
 
 ---
 
+## Kubernetes threat matrix
+
+![center width:800](binaries/k8s-attack-matrix.png)
+
+[Microsoft Security Blog](https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/?utm_sq=gefyyi4nvp)
+
+---
+
 ## La mode des containers
 
 > **Outil** qui permet d'empaqueter une application et ses dépendances. Elle pourra être exécuté sur n'importe quel serveur
@@ -536,30 +613,6 @@ L'application devient immuable
 
 ---
 
-## Service Mesh !
-
-Mettre en place des **Network Policies** peut être complexe... 
-
-... mais on peut faire encore plus complexe !
-
-![bg right:55% fit](binaries/servicemesh.jpg)
-
----
-
-## Mise à jour, le monde parfait (et simpliste)
-
-![center](binaries/kubernetes_upgrade_policy.png)
-
----
-
-## Avec un cluster k8s stateful multizone ?
-
-Zalando a des clusters avec des données... qui ne veulent pas migrer !
-
-![center width:580](binaries/zalando.png)
-
----
-
 <!-- _class: lead -->
 
 # Sources
@@ -578,13 +631,23 @@ Zalando a des clusters avec des données... qui ne veulent pas migrer !
 
 ---
 
-## Les outils pour durcir Kube
+## Les outils pour durcir Kube (1/2)
 
-* [Check des best practices : Kubehunter](https://github.com/aquasecurity/kube-hunter)
+* [Scan de vulnérabilité triviales : kube-hunter](https://github.com/aquasecurity/kube-hunter)
+* [Benchmark CSI de votre installation : kube-bench](https://github.com/aquasecurity/kube-bench)
 * [OnePolicyAgent](https://blog.octo.com/durcissez-votre-kube-avec-openpolicyagent/)
+* [Audit des app déployées : kubeaudit](https://github.com/Shopify/kubeaudit)
+* ["Risk assessment" du type CVSS : kube-scan](https://github.com/octarinesec/kube-scan)
+
+---
+
+## Les outils pour durcir Kube (2/2)
+
 * [Analyse statique : Clair](https://coreos.com/clair/docs/latest/)
-* [Analyse statique :Anchore](https://anchore.com/)
-* [IDS : Falco](https://falco.org/)
+* [Analyse statique : Anchore](https://anchore.com/)
+* [Analyse statique : Trivy](https://github.com/aquasecurity/trivy)
+* [Analyse runtime : Falco](https://falco.org/)
+* [CNI + analyse runtime : Cilium](https://cilium.io/)
 * [SELinux, Seccomp, Falco, a technical discussion](https://sysdig.com/blog/selinux-seccomp-falco-technical-discussion/)
 
 ---
