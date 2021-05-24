@@ -58,15 +58,13 @@ Auteur principal sur [blog.zwindler.fr](https://blog.zwindler.fr)*
 
 ---
 
-## ![height:50](binaries/deezer-logo.png)
+## ![height:50](binaries/deezer-logo.png) en quelques chiffres
 
-Plateforme française de distribution de musique numérique
-
----
-
-## Que fait un ingénieur cloud chez ![height:50](binaries/deezer-logo.png) ?
-
-![center width:1050](binaries/.png)
+* Créé en 2007
+* 73M de titres
+* 16M d'utilisateurs actifs
+* ~35k connections par seconde
+* 1 gros monolithe en cours de tronçonnage
 
 ---
 
@@ -122,7 +120,7 @@ Technologie de containerisation d'applications
 
 ## Retour à la réalité
 
-**Techniquement** : on a réinventé les `jail` avec une interface de management "simple" et des (très) gros binaires préconfigurées
+**Techniquement** : on a réinventé les `jail` avec une interface de management "simple" et des (très) gros binaires
 
 Mais on ne sait toujours pas comment gérer :
 
@@ -209,15 +207,17 @@ L'histoire récente regorge de failles et d'exploits sur des interfaces de manag
 
 ---
 
-## Moralité : n'exposez pas la console sur Internet
+## Moralité : sortez couvert (sur Internet)
 
 Vraiment.
 
 **N'exposez pas la console. Si vous ne l'utilisez pas, ne la déployez même pas.**
 
-* Vue incomplète de votre cluster et de votre métrologie (moins vrai aujourd'hui)
-* Préférez lui `kubectl`, des UIs locales, **Grafana**, **Prometheus** ou des outils de supervision tiers
+* ~~Vue incomplète de votre cluster et de votre métrologie~~
 * Les clouds providers la désactivent par défaut
+* Préférez lui 
+  * pour la gestion : `kubectl` ou des UIs locales
+  * pour la métrologie : **Grafana**, **Prometheus**, outils tiers
 
 ---
 
@@ -226,7 +226,7 @@ Vraiment.
 Pas de gestion des (vrais) utilisateurs. Les applications/démons ont des **ServiceAccounts** authentifiés par :
 
 * Tokens JWT
-* Certificats (pas révocables)
+* Certificats (difficilement révocables 😭)
 
 Ajouter une authentification tierce de type OIDC + RBAC
 
@@ -312,13 +312,13 @@ Tous les flux doivent être chiffrés, *en particulier ceux de Kubernetes* lui-m
 
 ## Ajouter des Network Policies
 
-Par défaut, la gestion du réseau virtuel dans Kubernetes *autorise tout container à se connecter à n'importe quel autre*.
+Par défaut, Kubernetes *autorise tout container à se connecter à n'importe quel autre* **#OpenBar**
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![](binaries/network_policy_yaml.png) &nbsp;&nbsp;&nbsp;&nbsp; ![](binaries/network_policy.png)
 
 ---
 
-## Les bons élèves des Network Policies
+## Sac de nouilles avec les Network Policies
 
 **Monzo Bank** a mis en place des [Network Policies pour la totalité de ses 1500 microservices](https://monzo.com/blog/we-built-network-isolation-for-1-500-services) : ![center](binaries/monzo2.png)
 
@@ -336,10 +336,11 @@ Mettre en place des **Network Policies** peut être complexe...
 
 ## Service Mesh
 
-Au delà de la gestion du trafic (monitoring, load balancing, A/B, ...), on peut déléguer beaucoup d'aspects réseau / sécurité à un Service Mesh :
+Déléguer beaucoup d'aspects réseau+sécu au Service Mesh :
 * gestion TLS
 * firewalling / ACL
-* analyse temps réel des attaques (audit/forensics, DDOS mitigation)
+* analyse temps réel des attaques
+  * audit/forensics, DDOS mitigation, ...
 
 ---
 
@@ -394,11 +395,14 @@ runAsUser:
   rule: 'MustRunAsNonRoot'
 ```
 
+* [Meetup Enix Jpetazzo - escalation via hostPath Volume](https://www.youtube.com/watch?v=z2P6n3Nj3ik)
+
 ---
 
-## ~~Pod Security Policy~~ DEPRECATED
+## ~~Pod Security Policy~~ 💥 DEPRECATED
 
-Dépréciées depuis Kubernetes 1.21, à remplacer par OPA (Open Policy Agent)
+Dépréciées depuis Kubernetes 1.21
+A remplacer par OPA (Open Policy Agent)
 
 ![height:300 center](binaries/gatekeeper_v3.webp)
 
@@ -460,7 +464,7 @@ Il existe aussi des *Intrusion Detection System* pour Kubernetes
 
 ---
 
-## “Pourquoi *GCC* tourne sur mon container ?”
+## “Pourquoi *GCC* tourne dans mon container ?”
 
 Utilise des programmes BPF côté kernel pour détecter des comportements anormaux
 
