@@ -504,7 +504,7 @@ Aout 2019 : la CNCF a commandé un audit du code de Kubernetes
 
 ## D'autres failles dans Kubernetes
 
-Deux autres grosses CVE sont sorties récemment
+Trois autres grosses CVE sont sorties "récemment"
 
 * **2018** / faille dans l'API server
   * [ZDnet : La première grosse faille de sécurité est là (API server)](https://www.zdnet.fr/actualites/kubernetes-la-premiere-grosse-faille-est-la-39877607.htm)
