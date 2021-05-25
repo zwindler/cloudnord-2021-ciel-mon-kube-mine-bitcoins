@@ -221,6 +221,16 @@ Vraiment.
 
 ---
 
+## Autre exemple : Kubeflow
+
+* Dashboard pour planifier des tâches de machine learning 
+* ML => GPU
+* $$$$$$
+
+[zdnet - Microsoft découvre un gang de cryptomining détournant des clusters Kubernetes](https://www-zdnet-fr.cdn.ampproject.org/c/s/www.zdnet.fr/amp/actualites/microsoft-decouvre-un-gang-de-cryptomining-detournant-des-clusters-kubernetes-39905041.htm)
+
+---
+
 ## Utilisez une authentification tierce
 
 Pas de gestion des (vrais) utilisateurs. Les applications/démons ont des **ServiceAccounts** authentifiés par :
@@ -671,6 +681,7 @@ L'application devient immuable
 * [2019 : Cryptojacking chez jwplayer](https://medium.com/jw-player-engineering/how-a-cryptocurrency-miner-made-its-way-onto-our-internal-kubernetes-clusters-9b09c4704205)
 * [Plus d'infos sur le cryptominer XMrig](https://news.sophos.com/fr-fr/2019/05/31/eternel-retour-cryptomineur-xmrig/)
 * [ZDNET : des hackers utilisent les API de management de Docker exposées sur le net](https://www.zdnet.com/article/a-hacking-group-is-hijacking-docker-systems-with-exposed-api-endpoints/)
+* [zdnet - Microsoft découvre un gang de cryptomining détournant des clusters Kubernetes](https://www-zdnet-fr.cdn.ampproject.org/c/s/www.zdnet.fr/amp/actualites/microsoft-decouvre-un-gang-de-cryptomining-detournant-des-clusters-kubernetes-39905041.htm)
 * [4armed : Server-Side Request Forgery + **etcd** accessible depuis Internet chez Digital Ocean](https://www.4armed.com/blog/hacking-digitalocean-kubernetes/)
 * [Un cluster perso d'un employé de Handy laisse son kubelet ouvert sur Internet](https://medium.com/handy-tech/analysis-of-a-kubernetes-hack-backdooring-through-kubelet-823be5c3d67c)
 
