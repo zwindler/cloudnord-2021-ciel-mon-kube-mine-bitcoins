@@ -225,7 +225,7 @@ Vraiment.
 
 * Dashboard pour planifier des tâches de machine learning 
 * ML => GPU
-* $$$$$$
+* \$\$\$\$\$\$
 
 [zdnet - Microsoft découvre un gang de cryptomining détournant des clusters Kubernetes](https://www-zdnet-fr.cdn.ampproject.org/c/s/www.zdnet.fr/amp/actualites/microsoft-decouvre-un-gang-de-cryptomining-detournant-des-clusters-kubernetes-39905041.htm)
 
